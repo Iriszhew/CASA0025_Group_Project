@@ -1,55 +1,233 @@
-# CASA00025 Group Project Title Here
+---
+title-block-banner: images/heat.png
+title: "HRI in london"
+---
 
-## Project Summary 
+## Project Summary
 
-Fill in the sections below to provide a brief summary of your project. Each section should have no more than 100 words. Do not edit any of the headings.
+1111
 
-### Problem Statement 
 
-What is the problem you’re trying to address using this application? 
+------------------------------------------------------------------------
 
-### End User 
+### Problem Statement
 
-Who are you building this application for? How does it address a need this community has?
+1111
 
-### Data
+### End User
 
-What data are you using? 
+1111
 
-### Methodology
+## Data
+<table>
+  <tr>
+    <th>catogory</th>
+    <th>Dataset</th>
+    <th>Description</th>
+    <th>Source</th>
+  </tr>
+  <tr>
+    <td rowspan="6">Satellite data</td>
+    <td>Elevation/Slope</td>
+    <td class="description">NASA SRTM Digital Elevation 30m</td>
+    <td><a href="https://developers.google.com/earth-engine/datasets/catalog/USGS_SRTMGL1_003">Link</a></td>
+  </tr>
+  <tr>
+    <td>Land Cover</td>
+    <td class="description">MODIS Land Cover Type (2020)</td>
+    <td><a href="https://developers.google.com/earth-engine/datasets/catalog/MODIS_061_MCD12Q1">Link</a></td>
+  </tr>
+  <tr>
+    <td>Hydrology</td>
+    <td class="description">WWF HydroSHEDS flow accumulation</td>
+    <td><a href="https://developers.google.com/earth-engine/datasets/catalog/WWF_HydroSHEDS_15ACC">Link</a></td>
+  </tr>
+  <tr>
+    <td>Soil Texture</td>
+    <td class="description">OpenLandMap Soil Texture Class (USDA System)</td>
+    <td><a href="https://developers.google.com/earth-engine/datasets/catalog/OpenLandMap_SOL_SOL_TEXTURE-CLASS_USDA-TT_M_v02">Link</a></td>
+  </tr>
+  <tr>
+    <td>Soil Type</td>
+    <td class="description">OpenLandMap Clay Content</td>
+    <td><a href="https://developers.google.com/earth-engine/datasets/catalog/OpenLandMap_SOL_SOL_CLAY-WFRACTION_USDA-3A1A1A_M_v02">Link</a></td>
+  </tr>
+  <tr>
+    <td>Population Density</td>
+    <td class="description">Global Human Settlement Layer of spatial distribution of residential population </td>
+ <td><a href="https://developers.google.com/earth-engine/datasets/catalog/JRC_GHSL_P2023A_GHS_POP">Link</a></td>
+ </tr>
+  <tr>
+    <td rowspan="4">Other</td>
+    <td >Historical Landslides</td>
+    <td class="description">Official reported landslide incident points (2011 - April 2025)</td>
+ <td><a href="https://bipadportal.gov.np/incidents/">Link</a></td>
+  </tr>
+  <tr>
+    <td>Census Population</td>
+    <td class="description">Official Population per District  2021 Census  </td>
+ <td><a href="https://censusnepal.cbs.gov.np/results/population#population_size_and_distribution">Link</a></td>
+  </tr>
+  <tr>
+    <td>Country Boundary</td>
+    <td class="description">Official boundary layer for Nepal </td>
+ <td><a href="https://nationalgeoportal.gov.np/#/metadata/96">Link</a></td>
+  </tr>
+  <tr>
+    <td>Districts Boundaries</td>
+    <td class="description"> Official bouundaries of Nepal's 77 districts</td>
+ <td><a href="https://nationalgeoportal.gov.np/#/metadata/95p">Link</a></td>
+  </tr>
+</table>
 
-How are you using this data to address the problem?
+## Methodology
 
-### Interface
+### Susceptibility Model
 
-How does your application's interface work to address the needs of your end user?
+To recreate Hong et al.'s susceptibility model in GEE, we imported six environmental variables into a weighted linear combination. Each variable was normalized on a 0-1 scale, and in combination with the weights provided a susceptibility score for each pixel. Susceptibility was then normalized 0-1 for the whole of Nepal.
 
-## The Application 
+![Susceptibility Model Methodology](images/heat.png)
 
-Replace the link below with the link to your application.
+#### Susceptibility Model Code
+::: {}
+``` j
 
-:::{.column-page}
+```
+:::
 
+### Random Forest Model
+
+To find populated areas most susceptible to landslides, we masked our environmental variables to populated areas, and trained a random forest classifier on landslide and randomly generated non-landslide points from Bipad Portal. Each pixel was scored based on the proportion of decision trees voting landslide.
+
+![Random Forest Model Methodology](images/heat.png)
+#### Random Forest Model Code
+
+::: {}
+``` 
+
+
+```
+::: 
+
+
+
+## Interface
+
+111
+
+
+:::: {.columns layout-align="center"}
+::: {.column width="46%"}
+![District Level View](images/heat.png)
+:::
+::: {.column width="2%"}
+::: 
+::: {.column width="46%"}
+![Methodology View](images/heat.png)
+:::
+:::: 
+
+## The Application
+
+### Demo
+
+111
+
+::: column-page
 <iframe src='https://ollielballinger.users.earthengine.app/view/turkey-earthquake' width='100%' height='700px'></iframe>
 
+
 :::
-## How it Works 
 
-Use this section to explain how your application works using code blocks and text explanations (no more than 500 words excluding code):
+### Key Features Beyond the Demo
 
-```js
-Map.setCenter(35.51898, 33.90153, 15);
+While our demo showcases the app's core functionality, several critical features work behind the scenes to enhance its performance and reliability. In this section, we highlight key capabilities implemented to optimize efficiency and ensure a seamless user experience.
 
-Map.setOptions("satellite");
-
-var aoi = ee.Geometry.Point(35.51898, 33.90153).buffer(3000);
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+#| classes: '.g-col-lg-6 .g-col-12 .g-col-md-12'
+#| class.output: none
+source("supporting-files/carousel.R")
+carousel("gallery-carousel", 5000, 
+         yaml.load_file("supporting-files/carousel.yml"))
 ```
 
-You can include images:
 
-![Pixelwise T-Test, 2018](images/beirut_change_2020.jpg)
+## How it Works
 
-and math:
-$$ \Large t = {\frac{\overline{x_1}-\overline{x_2}} {\sqrt{\frac{s^2_1}{n_1} + \frac{s^2_2}{n_2}}}} $$
+### 1. Data Preparation and Precomputations
+
+To handle complex computations, separate scripts were developed for the two methodologies explained above and results are imported into the app as precomputed layers.
+
+#### Imported Precomputed Layers:
+
+-   Environmental Landslide Susceptibility: Maps susceptibility using environmental variables.
+
+-   Normalized Landslide Susceptibility: Adjusted for population exposure.
+
+-   Random Forest Landslide Probability: ML-based risk focused on populated areas.
+
+#### District-Level Aggregation:
+
+A dedicated script was built to aggregate historical landslide data with impact metrics (e.g., incidents, deaths, injuries, destroyed infrastructure), alongside population and susceptibility metrics per district. It also computes engineered features like incidents per km² and identifies nearest districts (via spatial proximity of centroids) to support comparative analysis.
+
+::: {.scroll-container style="overflow-y: scroll; height: 300px; padding:20px "}
+
+::: 
+
+### 2. Interactive Visualization and Analysis
+
+#### National Overview
+
+At startup, national-level statistics are displayed, highlighting aggregated data. A pie chart shows population risk distribution across susceptibility zones (Low, Medium, High), and a bar chart lists the top 5 districts by impact metric, allowing users to switch metrics and zoom into a district by clicking a bar.
+
+#### Susceptibility Zones
+
+Susceptibility zones are defined as Low (\<0.3), Medium (0.3–0.5), and High (\>0.5), identified by analyzing the distribution of susceptibility values from the built Susceptibility model.
+
+::: {.scroll-container style="overflow-y: scroll; height: 300px; padding:20px "}
+
+``` javascript
+
+```
+:::
+
+#### District-Level Analysis
+
+This view visualizes precomputed district-level metrics, comparing them with national averages and the two nearest districts. Historical landslides are mapped, with popups displaying aggregated impact details (e.g., deaths, injuries) within a 300m radius of a clicked point.
+
+
+``` javascript
+ 
+```
+
+#### Methodology Overview
+
+This view allows users to compare the two methodologies (Environmental Susceptibility and RF) using a split panel. It displays the RF probability map and normalized risk map for populated areas, with a draggable divider for spatial comparison, focusing on population exposure.
+
+``` javascript
+
+```
+### 3. Insights and Objectives
+
+The app provides actionable insights for disaster preparedness in Nepal by identifying high-risk districts and population exposure. It supports:
+
+ - **Risk Prioritization:** Highlights districts with high susceptibility or incident rates (e.g., top 5 districts by deaths) to guide resource allocation.
+ 
+- **Localized Insights:** Enables district-level analysis for targeted planning and response, benefiting community preparedness efforts.
+
+- **Academic Research:** Unlike traditional landslide models in academic papers, this app provides an interactive platform for exploring risk dynamics through a comparison of Environmental Susceptibility and Random Forest methodologies, leveraging incidents data. By masking to populated areas, it focuses on human exposure, as official records often under-report incidents in uninhabited regions, ensuring more accurate risk assessment and model comparison for populated zones.
+
+### 4. Limitations and Potential Expansion
+- **Static Models:** Current models are precomputed, limiting adaptability to changing environmental conditions. Adding dynamic updates with live data (e.g., rainfall, land use changes) could improve accuracy and responsiveness.
+
+- **Granularity of Analysis:** The app focuses on district-level analysis, but more granular insights (e.g., at the village or ward level) could improve localized planning.
+
+- **Report Export:** The app lacks a feature to export analysis reports, which would be valuable for stakeholders to document and share findings.
+
+
+# References
+
+
+
 
 
