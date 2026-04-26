@@ -209,20 +209,10 @@ This view allows users to compare the two methodologies (Environmental Susceptib
 ```
 ### 3. Insights and Objectives
 
-The app provides actionable insights for disaster preparedness in Nepal by identifying high-risk districts and population exposure. It supports:
 
- - **Risk Prioritization:** Highlights districts with high susceptibility or incident rates (e.g., top 5 districts by deaths) to guide resource allocation.
- 
-- **Localized Insights:** Enables district-level analysis for targeted planning and response, benefiting community preparedness efforts.
-
-- **Academic Research:** Unlike traditional landslide models in academic papers, this app provides an interactive platform for exploring risk dynamics through a comparison of Environmental Susceptibility and Random Forest methodologies, leveraging incidents data. By masking to populated areas, it focuses on human exposure, as official records often under-report incidents in uninhabited regions, ensuring more accurate risk assessment and model comparison for populated zones.
 
 ### 4. Limitations and Potential Expansion
-- **Static Models:** Current models are precomputed, limiting adaptability to changing environmental conditions. Adding dynamic updates with live data (e.g., rainfall, land use changes) could improve accuracy and responsiveness.
 
-- **Granularity of Analysis:** The app focuses on district-level analysis, but more granular insights (e.g., at the village or ward level) could improve localized planning.
-
-- **Report Export:** The app lacks a feature to export analysis reports, which would be valuable for stakeholders to document and share findings.
 
 
 # References
