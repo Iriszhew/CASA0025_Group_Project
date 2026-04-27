@@ -2,28 +2,25 @@ project:
   type: website
   output-dir: docs
 
-book:
-  title: "CASA0025 Final Assessment"
-  author: "Group Name"
-  date: "01/01/2024"
-  chapters:
-    - index.qmd
-
-  repo-actions: [edit]
-  downloads: [pdf, epub]
-  sharing: [twitter, facebook]
-  favicon: favicon.ico
-  sidebar:
-    logo: casa_logo.png
-
-
-
 format:
   html:
+    toc: true
+    toc-depth: 3
+    toc-title: Contents
+    toc-location: right
+
+    code-fold: show
+    code-summary: "Show the code"
+    code-overflow: scroll
+    highlight-style: github
+    code-block-border-left: "#5a5d3c"
+
     theme:
-      dark: darkly
-      light: cosmo
-    code-copy: true
-    code-overflow: wrap
-    highlight-style: monokai.theme
-    linkcolor: "#34a832"
+      light: Journal
+
+    css: style.css
+
+
+
+    smooth-scroll: true
+    link-external-newwindow: true

@@ -1,6 +1,7 @@
 ---
+title: "HRI in London"
 title-block-banner: images/heat.png
-title: "HRI in london"
+css: style.css
 ---
 
 ## Project Summary
@@ -143,13 +144,7 @@ To find populated areas most susceptible to landslides, we masked our environmen
 
 While our demo showcases the app's core functionality, several critical features work behind the scenes to enhance its performance and reliability. In this section, we highlight key capabilities implemented to optimize efficiency and ensure a seamless user experience.
 
-```{r, echo = FALSE, message = FALSE, warning = FALSE}
-#| classes: '.g-col-lg-6 .g-col-12 .g-col-md-12'
-#| class.output: none
-source("supporting-files/carousel.R")
-carousel("gallery-carousel", 5000, 
-         yaml.load_file("supporting-files/carousel.yml"))
-```
+
 
 
 ## How it Works
