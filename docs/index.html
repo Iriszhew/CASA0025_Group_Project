@@ -111,6 +111,35 @@ background-size: cover;
       }
 </style>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="style.css">
 </head>
@@ -149,11 +178,7 @@ background-size: cover;
   <li><a href="#end-user" id="toc-end-user" class="nav-link" data-scroll-target="#end-user">End User</a></li>
   </ul></li>
   <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a></li>
-  <li><a href="#methodology" id="toc-methodology" class="nav-link" data-scroll-target="#methodology">Methodology</a>
-  <ul class="collapse">
-  <li><a href="#susceptibility-model" id="toc-susceptibility-model" class="nav-link" data-scroll-target="#susceptibility-model">Susceptibility Model</a></li>
-  <li><a href="#random-forest-model" id="toc-random-forest-model" class="nav-link" data-scroll-target="#random-forest-model">Random Forest Model</a></li>
-  </ul></li>
+  <li><a href="#methodology" id="toc-methodology" class="nav-link" data-scroll-target="#methodology">Methodology</a></li>
   <li><a href="#interface" id="toc-interface" class="nav-link" data-scroll-target="#interface">Interface</a></li>
   <li><a href="#the-application" id="toc-the-application" class="nav-link" data-scroll-target="#the-application">The Application</a>
   <ul class="collapse">
@@ -180,55 +205,162 @@ background-size: cover;
 
 <section id="project-summary" class="level2">
 <h2 class="anchored" data-anchor-id="project-summary">Project Summary</h2>
-<p>1111</p>
+<p>This project develops an interactive spatial Heat Risk Index (HRI) platform for London, aiming to bridge the gap between academic heat-risk research and practical urban governance. By integrating Land Surface Temperature (LST), vegetation indicators, Urban Heat Island (UHI) proportion, and population density LQ, the platform transforms complex spatial datasets into a clear borough-level heat risk assessment. Using precomputed Google Earth Engine layers, the dashboard supports efficient visualisation, localised borough profiling, and split-screen comparison between key indicators. The platform provides actionable insights for urban planners, public health agencies, and climate adaptation teams to identify high-risk areas and prioritise targeted heat mitigation interventions.</p>
 <hr>
 <section id="problem-statement" class="level3">
 <h3 class="anchored" data-anchor-id="problem-statement">Problem Statement</h3>
-<p>London faces increasing extreme heat and urban heat island risks, threatening public health and economic resilience. In 2020, heat-related economic losses reached £577 million, while the 2022 heatwaves caused around 370 deaths. This project develops a borough-level Heat Risk Index (HRI) to systematically assess and visualise London’s heat risk. The platform helps planners, policymakers and stakeholders identify priority areas for intervention and supports climate adaptation, green infrastructure and urban resilience goals in the London Plan 2021.</p>
+<p>London faces increasing extreme heat and urban heat island risks, threatening public health and economic resilience. In 2020, heat-related economic losses reached £577 million, while the 2022 heatwaves caused around 370 deaths(Climate Resilience Center, 2023; Simpson, Brousse and Heaviside, 2024). This project develops a borough-level Heat Risk Index (HRI) to systematically assess and visualise London’s heat risk. The platform helps planners, policymakers and stakeholders identify priority areas for intervention and supports climate adaptation, green infrastructure and urban resilience goals in the London Plan 2021.</p>
 </section>
 <section id="end-user" class="level3">
 <h3 class="anchored" data-anchor-id="end-user">End User</h3>
-<p>1111</p>
+<p>This Heat Risk Index (HRI) is designed for users across urban governance, public health, and spatial analysis in London, including planners, local authorities, public health agencies, and GIS analysts. These users require tools that are both scientifically robust and accessible to support decision-making under increasing heat risks.</p>
+<p>While extensive research on urban heat exists, there remains a gap between academic outputs and practical implementation. This project addresses this by integrating land surface temperature, green cover, NDVI, and population density into a single, spatially explicit index, providing a clear and interpretable representation of heat risk across boroughs.</p>
 </section>
 </section>
 <section id="data" class="level2">
 <h2 class="anchored" data-anchor-id="data">Data</h2>
+<table>
+<tbody><tr>
+<th>
+CATEGORY
+</th>
+<th>
+DATASET
+</th>
+<th>
+DESCRIPTION
+</th>
+<th>
+SOURCE
+</th>
+</tr>
+<tr>
+<td rowspan="3">
+GEE
+</td>
+<td>
+Land Surface Temperature
+</td>
+<td class="description">
+Landsat 8/9 summer surface temperature data
+</td>
+<td>
+<a href="https://developers.google.com/earth-engine/datasets/catalog/LANDSAT_LC08_C02_T1_L2">L8</a> / <a href="https://developers.google.com/earth-engine/datasets/catalog/LANDSAT_LC09_C02_T1_L2">L9</a>
+</td>
+</tr>
+<tr>
+<td>
+NDVI
+</td>
+<td class="description">
+Landsat 8/9 red and near-infrared bands
+</td>
+<td>
+<a href="https://developers.google.com/earth-engine/datasets/catalog/LANDSAT_LC08_C02_T1_L2">L8</a> / <a href="https://developers.google.com/earth-engine/datasets/catalog/LANDSAT_LC09_C02_T1_L2">L9</a>
+</td>
+</tr>
+<tr>
+<td>
+Green Cover
+</td>
+<td class="description">
+ESA WorldCover 2020 land cover classes
+</td>
+<td>
+<a href="https://developers.google.com/earth-engine/datasets/catalog/ESA_WorldCover_v200">Link</a>
+</td>
+</tr>
+<tr>
+<td rowspan="5">
+Other
+</td>
+<td>
+LSOA Boundaries
+</td>
+<td class="description">
+2021 Lower Layer Super Output Area boundaries
+</td>
+<td>
+<a href="https://geoportal.statistics.gov.uk/datasets/ons::lower-layer-super-output-areas-december-2021-boundaries-ew-bsc-v4-2/about">Link</a>
+</td>
+</tr>
+<tr>
+<td>
+London Boundary
+</td>
+<td class="description">
+Greater London study area boundary
+</td>
+<td>
+<a href="https://data.london.gov.uk/dataset/statistical-gis-boundary-files-for-london-20od9/">Link</a>
+</td>
+</tr>
+<tr>
+<td>
+Borough Boundaries
+</td>
+<td class="description">
+London borough administrative boundaries
+</td>
+<td>
+<a href="https://data.london.gov.uk/dataset/london-boroughs-e55pw/">Link</a>
+</td>
+</tr>
+<tr>
+<td>
+Census Population
+</td>
+<td class="description">
+2021 population and area data at LSOA level
+</td>
+<td>
+<a href="https://www.ons.gov.uk/census">Link</a>
+</td>
+</tr>
+</tbody></table>
 </section>
 <section id="methodology" class="level2">
 <h2 class="anchored" data-anchor-id="methodology">Methodology</h2>
-<section id="susceptibility-model" class="level3">
-<h3 class="anchored" data-anchor-id="susceptibility-model">Susceptibility Model</h3>
-<p>To recreate Hong et al.’s susceptibility model in GEE, we imported six environmental variables into a weighted linear combination. Each variable was normalized on a 0-1 scale, and in combination with the weights provided a susceptibility score for each pixel. Susceptibility was then normalized 0-1 for the whole of Nepal.</p>
+<p>This project adopts the methodology proposed by Elmarakby and Elkadi (2024) to develop a borough-level Heat Risk Index (HRI) for London. The index integrates three key indicators: urban heat island intensity, population density, and green cover, representing heat exposure, population vulnerability, and cooling capacity. Each variable is standardised to a 1–5 scale using min–max normalisation.</p>
+<p><span class="math display">\[
+Score = 1 + 4 \times \frac{x - x_{min}}{x_{max} - x_{min}}
+\]</span></p>
+<p><span class="math display">\[
+HRI = UHI_{score} + LackGreen_{score} + Density_{score}
+\]</span> These three indicators are then equally weighted and summed to produce the final HRI. Higher HRI values indicate greater overall heat risk and help identify boroughs where mitigation actions should be prioritised.(Elmarakby and Elkadi, 2024)</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/heat.png" class="img-fluid figure-img"></p>
-<figcaption>Susceptibility Model Methodology</figcaption>
+<p><img src="images/methodology.png" class="img-fluid figure-img"></p>
+<figcaption>HRI Methodology</figcaption>
 </figure>
 </div>
-<section id="susceptibility-model-code" class="level4">
-<h4 class="anchored" data-anchor-id="susceptibility-model-code">Susceptibility Model Code</h4>
-<div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode j code-with-copy"><code class="sourceCode j"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
-</section>
-<section id="random-forest-model" class="level3">
-<h3 class="anchored" data-anchor-id="random-forest-model">Random Forest Model</h3>
-<p>To find populated areas most susceptible to landslides, we masked our environmental variables to populated areas, and trained a random forest classifier on landslide and randomly generated non-landslide points from Bipad Portal. Each pixel was scored based on the proportion of decision trees voting landslide.</p>
-<p><img src="images/heat.png" class="img-fluid" alt="Random Forest Model Methodology"> #### Random Forest Model Code</p>
-<div>
-<pre><code></code></pre>
+<section id="heat-risk-index-code" class="level4">
+<h4 class="anchored" data-anchor-id="heat-risk-index-code">Heat Risk Index Code</h4>
+<div class="scrolly-container" style="overflow-y: scroll; height:300px; padding:20px;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Min-max standardisation to 1-5</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> minmax_1_5(series):</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">1</span> <span class="op">+</span> <span class="dv">4</span> <span class="op">*</span> (series <span class="op">-</span> series.<span class="bu">min</span>()) <span class="op">/</span> (series.<span class="bu">max</span>() <span class="op">-</span> series.<span class="bu">min</span>())</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"lack_green_score"</span>] <span class="op">=</span> minmax_1_5(df[<span class="st">"lack_green_pct"</span>])</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"density_score"</span>] <span class="op">=</span> minmax_1_5(df[<span class="st">"borough_density"</span>])</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"uhi_score"</span>] <span class="op">=</span> minmax_1_5(df[<span class="st">"UHI_proportion"</span>])</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"HRI"</span>] <span class="op">=</span> (</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"lack_green_score"</span>] <span class="op">+</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"density_score"</span>] <span class="op">+</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"uhi_score"</span>]</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 </section>
 <section id="interface" class="level2">
 <h2 class="anchored" data-anchor-id="interface">Interface</h2>
-<p>111</p>
+<p>The interface uses two main methods to support heat-risk analysis. First, the borough-level dashboard allows users to select or click a borough and view key indicators, including population density LQ, mean LST, UHI proportion, green cover, NDVI, and HRI score. This supports localised risk profiling. Second, the split-layer comparison view enables users to compare two spatial layers side by side, such as LST and HRI or green cover and NDVI. Together, these tools make complex heat-risk data easier to interpret and help users identify priority areas for targeted urban heat mitigation.</p>
 <div class="columns" data-layout-align="center">
 <div class="column" style="width:46%;">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/heat.png" class="img-fluid figure-img"></p>
+<p><img src="images/1.png" class="img-fluid figure-img"></p>
 <figcaption>District Level View</figcaption>
 </figure>
 </div>
@@ -237,7 +369,7 @@ background-size: cover;
 </div><div class="column" style="width:46%;">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/heat.png" class="img-fluid figure-img"></p>
+<p><img src="images/2.png" class="img-fluid figure-img"></p>
 <figcaption>Methodology View</figcaption>
 </figure>
 </div>
@@ -248,7 +380,7 @@ background-size: cover;
 <h2 class="anchored" data-anchor-id="the-application">The Application</h2>
 <section id="demo" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="demo">Demo</h3>
-<p>1111</p>
+<p>This application uses Google Earth Engine to visualise borough-level heat risk across London. By integrating urban heat island intensity, population density and green cover, it presents an interactive Heat Risk Index map that helps users explore spatial patterns and identify areas requiring targeted heat mitigation.</p>
 <div class="column-page">
 <iframe src="https://casa-remote-sensing.projects.earthengine.app/view/london-heat-risk" width="100%" height="700px">
 </iframe>
@@ -256,8 +388,7 @@ background-size: cover;
 </section>
 <section id="key-features-beyond-the-demo" class="level3">
 <h3 class="anchored" data-anchor-id="key-features-beyond-the-demo">Key Features Beyond the Demo</h3>
-<hr>
-<hr>
+<p>Beyond the core demo, the application includes several features to enhance usability and analysis. These support intuitive interaction, clearer spatial exploration, and flexible comparison of heat risk patterns. Together, they provide a more efficient and user-friendly way to understand and interpret heat risk across London.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="gallery-carousel" class="carousel carousel-dark slide" data-bs-ride="false" style="height: 480px; background-color: #f0f0f0; position: relative; width: 100%;">
@@ -342,56 +473,489 @@ background-size: cover;
 <h2 class="anchored" data-anchor-id="how-it-works">How it Works</h2>
 <section id="data-preparation-and-precomputations" class="level3">
 <h3 class="anchored" data-anchor-id="data-preparation-and-precomputations">1. Data Preparation and Precomputations</h3>
-<p>To handle complex computations, separate scripts were developed for the two methodologies explained above and results are imported into the app as precomputed layers.</p>
-<section id="imported-precomputed-layers" class="level4">
-<h4 class="anchored" data-anchor-id="imported-precomputed-layers">Imported Precomputed Layers:</h4>
-<ul>
-<li><p>Environmental Landslide Susceptibility: Maps susceptibility using environmental variables.</p></li>
-<li><p>Normalized Landslide Susceptibility: Adjusted for population exposure.</p></li>
-<li><p>Random Forest Landslide Probability: ML-based risk focused on populated areas.</p></li>
-</ul>
+<p>To improve the performance of the dashboard, the main spatial calculations were completed in advance and stored as precomputed layers and borough-level indicators. Instead of recalculating all values during user interaction, the app imports processed results and uses them to update the map and information panel.</p>
+<section id="imported-and-processed-layers" class="level4">
+<h4 class="anchored" data-anchor-id="imported-and-processed-layers">Imported and Processed Layers:</h4>
+<p><strong>Population Density LQ:</strong> to show how each area compares with the London average.</p>
+<p><strong>Mean Land Surface Temperature:</strong> to represent summer heat exposure across London.</p>
+<p><strong>Urban Heat Island Proportion:</strong> to show the proportion of each borough affected by UHI conditions.</p>
+<p><strong>Green Cover and NDVI:</strong> to represent the availability and condition of vegetation.</p>
+<p><strong>Heat Risk Index:</strong> a pre-processed borough-level HRI table was calculated separately in Python (https://github.com/Iriszhew/CASA0025_Group_Project/blob/main/gw_calculate_HRI.ipynb) and then imported into Google Earth Engine. It combines population density, lack of green cover and UHI exposure into a single risk score</p>
+<p>(Table)</p>
 </section>
-<section id="district-level-aggregation" class="level4">
-<h4 class="anchored" data-anchor-id="district-level-aggregation">District-Level Aggregation:</h4>
-<p>A dedicated script was built to aggregate historical landslide data with impact metrics (e.g., incidents, deaths, injuries, destroyed infrastructure), alongside population and susceptibility metrics per district. It also computes engineered features like incidents per km² and identifies nearest districts (via spatial proximity of centroids) to support comparative analysis.</p>
+<section id="borough-level-aggregation" class="level4">
+<h4 class="anchored" data-anchor-id="borough-level-aggregation">Borough-Level Aggregation:</h4>
+<p>All indicators were aggregated to the borough scale so that each borough contains a consistent set of summary values. For each borough, the workflow extracts the borough geometry, calculates average heat and vegetation indicators within the boundary, and stores the results as new borough-level attributes. These values are then used by the dashboard when users click or select a borough.</p>
 <div class="scroll-container" style="overflow-y: scroll; height: 300px; padding:20px ">
-
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">// Borough-level population density LQ</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> groupedDensity <span class="op">=</span> censusClean<span class="op">.</span><span class="fu">reduceColumns</span>({</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">selectors</span><span class="op">:</span> [<span class="st">'borough_name'</span><span class="op">,</span> <span class="st">'pop'</span><span class="op">,</span> <span class="st">'census_area_km2'</span>]<span class="op">,</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">reducer</span><span class="op">:</span> ee<span class="op">.</span><span class="at">Reducer</span><span class="op">.</span><span class="fu">sum</span>()</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">repeat</span>(<span class="dv">2</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">group</span>({</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>      <span class="dt">groupField</span><span class="op">:</span> <span class="dv">0</span><span class="op">,</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>      <span class="dt">groupName</span><span class="op">:</span> <span class="st">'borough_name'</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> boroughDensityStats <span class="op">=</span> ee<span class="op">.</span><span class="fu">FeatureCollection</span>(</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  ee<span class="op">.</span><span class="fu">List</span>(groupedDensity<span class="op">.</span><span class="fu">get</span>(<span class="st">'groups'</span>))<span class="op">.</span><span class="fu">map</span>(<span class="kw">function</span>(item) {</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    item <span class="op">=</span> ee<span class="op">.</span><span class="fu">Dictionary</span>(item)<span class="op">;</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="kw">var</span> sums <span class="op">=</span> ee<span class="op">.</span><span class="fu">List</span>(item<span class="op">.</span><span class="fu">get</span>(<span class="st">'sum'</span>))<span class="op">;</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">var</span> boroughPop <span class="op">=</span> ee<span class="op">.</span><span class="fu">Number</span>(sums<span class="op">.</span><span class="fu">get</span>(<span class="dv">0</span>))<span class="op">;</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    <span class="kw">var</span> boroughArea <span class="op">=</span> ee<span class="op">.</span><span class="fu">Number</span>(sums<span class="op">.</span><span class="fu">get</span>(<span class="dv">1</span>))<span class="op">;</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    <span class="kw">var</span> boroughDensity <span class="op">=</span> boroughPop<span class="op">.</span><span class="fu">divide</span>(boroughArea)<span class="op">;</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ee<span class="op">.</span><span class="fu">Feature</span>(<span class="kw">null</span><span class="op">,</span> {</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>      <span class="dt">borough_name</span><span class="op">:</span> item<span class="op">.</span><span class="fu">get</span>(<span class="st">'borough_name'</span>)<span class="op">,</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>      <span class="dt">borough_pop</span><span class="op">:</span> boroughPop<span class="op">,</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>      <span class="dt">borough_area_km2</span><span class="op">:</span> boroughArea<span class="op">,</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>      <span class="dt">borough_density</span><span class="op">:</span> boroughDensity</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    })<span class="op">;</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="co">// Borough-level LST statistics</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> boroughLST <span class="op">=</span> lstMean2022<span class="op">.</span><span class="fu">reduceRegions</span>({</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>  <span class="dt">collection</span><span class="op">:</span> boroughs<span class="op">,</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>  <span class="dt">reducer</span><span class="op">:</span> ee<span class="op">.</span><span class="at">Reducer</span><span class="op">.</span><span class="fu">mean</span>()</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">combine</span>(ee<span class="op">.</span><span class="at">Reducer</span><span class="op">.</span><span class="fu">min</span>()<span class="op">,</span> <span class="st">''</span><span class="op">,</span> <span class="kw">true</span>)</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">combine</span>(ee<span class="op">.</span><span class="at">Reducer</span><span class="op">.</span><span class="fu">max</span>()<span class="op">,</span> <span class="st">''</span><span class="op">,</span> <span class="kw">true</span>)</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">combine</span>(ee<span class="op">.</span><span class="at">Reducer</span><span class="op">.</span><span class="fu">stdDev</span>()<span class="op">,</span> <span class="st">''</span><span class="op">,</span> <span class="kw">true</span>)<span class="op">,</span></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>  <span class="dt">scale</span><span class="op">:</span> <span class="dv">30</span><span class="op">,</span></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>  <span class="dt">crs</span><span class="op">:</span> <span class="st">'EPSG:4326'</span></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="co">// Borough-level UHI proportion</span></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> uhiBinary <span class="op">=</span> uhiMap</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">unmask</span>(<span class="dv">0</span>)</span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">rename</span>(<span class="st">'UHI'</span>)<span class="op">;</span></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> boroughUHI <span class="op">=</span> uhiBinary<span class="op">.</span><span class="fu">reduceRegions</span>({</span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>  <span class="dt">collection</span><span class="op">:</span> boroughs<span class="op">,</span></span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>  <span class="dt">reducer</span><span class="op">:</span> ee<span class="op">.</span><span class="at">Reducer</span><span class="op">.</span><span class="fu">mean</span>()<span class="op">,</span></span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>  <span class="dt">scale</span><span class="op">:</span> <span class="dv">30</span><span class="op">,</span></span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>  <span class="dt">crs</span><span class="op">:</span> <span class="st">'EPSG:4326'</span></span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> boroughUHIResult <span class="op">=</span> boroughUHI<span class="op">.</span><span class="fu">map</span>(<span class="kw">function</span>(f) {</span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> f<span class="op">.</span><span class="fu">set</span>({</span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>    <span class="dt">UHI_proportion</span><span class="op">:</span> f<span class="op">.</span><span class="fu">get</span>(<span class="st">'mean'</span>)</span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a><span class="co">// Borough-level green cover percentage</span></span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> boroughGreenStats <span class="op">=</span> greenCover<span class="op">.</span><span class="fu">reduceRegions</span>({</span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>  <span class="dt">collection</span><span class="op">:</span> boroughs<span class="op">,</span></span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>  <span class="dt">reducer</span><span class="op">:</span> ee<span class="op">.</span><span class="at">Reducer</span><span class="op">.</span><span class="fu">mean</span>()<span class="op">,</span></span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>  <span class="dt">scale</span><span class="op">:</span> <span class="dv">10</span></span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> boroughGreenResult <span class="op">=</span> boroughGreenStats<span class="op">.</span><span class="fu">map</span>(<span class="kw">function</span>(f) {</span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> greenPct <span class="op">=</span> ee<span class="op">.</span><span class="fu">Number</span>(f<span class="op">.</span><span class="fu">get</span>(<span class="st">'mean'</span>))<span class="op">.</span><span class="fu">multiply</span>(<span class="dv">100</span>)<span class="op">;</span></span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> lackGreenPct <span class="op">=</span> ee<span class="op">.</span><span class="fu">Number</span>(<span class="dv">100</span>)<span class="op">.</span><span class="fu">subtract</span>(greenPct)<span class="op">;</span></span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> f<span class="op">.</span><span class="fu">set</span>({</span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>    <span class="dt">green_pct</span><span class="op">:</span> greenPct<span class="op">,</span></span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>    <span class="dt">lack_green_pct</span><span class="op">:</span> lackGreenPct</span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a><span class="co">// Borough-level mean NDVI</span></span>
+<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> boroughNDVI <span class="op">=</span> ndviMean2022<span class="op">.</span><span class="fu">reduceRegions</span>({</span>
+<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a>  <span class="dt">collection</span><span class="op">:</span> boroughs<span class="op">,</span></span>
+<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a>  <span class="dt">reducer</span><span class="op">:</span> ee<span class="op">.</span><span class="at">Reducer</span><span class="op">.</span><span class="fu">mean</span>()<span class="op">,</span></span>
+<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a>  <span class="dt">scale</span><span class="op">:</span> <span class="dv">30</span></span>
+<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> boroughNDVIResult <span class="op">=</span> boroughNDVI<span class="op">.</span><span class="fu">map</span>(<span class="kw">function</span>(f) {</span>
+<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> f<span class="op">.</span><span class="fu">set</span>({</span>
+<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a>    <span class="dt">mean_NDVI</span><span class="op">:</span> f<span class="op">.</span><span class="fu">get</span>(<span class="st">'mean'</span>)</span>
+<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
+<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Then, population density LQ and the precomputed HRI score are joined to the borough summary table using borough codes. This creates one final dashboard-ready table containing all indicators for each borough.</p>
+<div class="scroll-container" style="overflow-y: scroll; height: 300px; padding:20px ">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Join a secondary FeatureCollection to a primary FeatureCollection by borough code</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">joinByBoroughCode</span>(primary<span class="op">,</span> secondary<span class="op">,</span> matchName) {</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> join <span class="op">=</span> ee<span class="op">.</span><span class="at">Join</span><span class="op">.</span><span class="fu">saveFirst</span>(matchName)<span class="op">;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> filter <span class="op">=</span> ee<span class="op">.</span><span class="at">Filter</span><span class="op">.</span><span class="fu">equals</span>({</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">leftField</span><span class="op">:</span> <span class="st">'LAD22CD'</span><span class="op">,</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">rightField</span><span class="op">:</span> <span class="st">'LAD22CD'</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> ee<span class="op">.</span><span class="fu">FeatureCollection</span>(join<span class="op">.</span><span class="fu">apply</span>({</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="dt">primary</span><span class="op">:</span> primary<span class="op">,</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">secondary</span><span class="op">:</span> secondary<span class="op">,</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="dt">condition</span><span class="op">:</span> filter</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  }))<span class="op">;</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co">// Safely extract values from joined features</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">getJoinedValue</span>(feature<span class="op">,</span> matchName<span class="op">,</span> propertyName) {</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> emptyFeature <span class="op">=</span> ee<span class="op">.</span><span class="fu">Feature</span>(<span class="kw">null</span>)<span class="op">;</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> matchedFeature <span class="op">=</span> ee<span class="op">.</span><span class="fu">Feature</span>(</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    ee<span class="op">.</span><span class="at">Algorithms</span><span class="op">.</span><span class="fu">If</span>(</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>      feature<span class="op">.</span><span class="fu">get</span>(matchName)<span class="op">,</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>      feature<span class="op">.</span><span class="fu">get</span>(matchName)<span class="op">,</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>      emptyFeature</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>  )<span class="op">;</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> matchedFeature<span class="op">.</span><span class="fu">get</span>(propertyName)<span class="op">;</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a><span class="co">// Join all borough-level indicators</span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> dashboardJoined <span class="op">=</span> boroughs<span class="op">;</span></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>dashboardJoined <span class="op">=</span> <span class="fu">joinByBoroughCode</span>(</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>  dashboardJoined<span class="op">,</span></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>  boroughDensityLQResult<span class="op">,</span></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>  <span class="st">'density_match'</span></span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>dashboardJoined <span class="op">=</span> <span class="fu">joinByBoroughCode</span>(</span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>  dashboardJoined<span class="op">,</span></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>  boroughLST<span class="op">,</span></span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>  <span class="st">'lst_match'</span></span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>dashboardJoined <span class="op">=</span> <span class="fu">joinByBoroughCode</span>(</span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>  dashboardJoined<span class="op">,</span></span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>  boroughUHIResult<span class="op">,</span></span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>  <span class="st">'uhi_match'</span></span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>dashboardJoined <span class="op">=</span> <span class="fu">joinByBoroughCode</span>(</span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>  dashboardJoined<span class="op">,</span></span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>  boroughGreenResult<span class="op">,</span></span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>  <span class="st">'green_match'</span></span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>dashboardJoined <span class="op">=</span> <span class="fu">joinByBoroughCode</span>(</span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>  dashboardJoined<span class="op">,</span></span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>  boroughNDVIResult<span class="op">,</span></span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>  <span class="st">'ndvi_match'</span></span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>dashboardJoined <span class="op">=</span> <span class="fu">joinByBoroughCode</span>(</span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>  dashboardJoined<span class="op">,</span></span>
+<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a>  hriBoroughs<span class="op">,</span></span>
+<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a>  <span class="st">'hri_match'</span></span>
+<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span>
+<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a><span class="co">// Create final dashboard-ready borough table</span></span>
+<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> boroughDashboardData <span class="op">=</span> dashboardJoined<span class="op">.</span><span class="fu">map</span>(<span class="kw">function</span>(f) {</span>
+<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> f<span class="op">.</span><span class="fu">set</span>({</span>
+<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a>    <span class="dt">borough_pop</span><span class="op">:</span> <span class="fu">getJoinedValue</span>(f<span class="op">,</span> <span class="st">'density_match'</span><span class="op">,</span> <span class="st">'borough_pop'</span>)<span class="op">,</span></span>
+<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a>    <span class="dt">mean_density_LQ</span><span class="op">:</span> <span class="fu">getJoinedValue</span>(f<span class="op">,</span> <span class="st">'density_match'</span><span class="op">,</span> <span class="st">'mean_density_LQ'</span>)<span class="op">,</span></span>
+<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a>    <span class="dt">mean_LST</span><span class="op">:</span> <span class="fu">getJoinedValue</span>(f<span class="op">,</span> <span class="st">'lst_match'</span><span class="op">,</span> <span class="st">'mean'</span>)<span class="op">,</span></span>
+<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a>    <span class="dt">min_LST</span><span class="op">:</span> <span class="fu">getJoinedValue</span>(f<span class="op">,</span> <span class="st">'lst_match'</span><span class="op">,</span> <span class="st">'min'</span>)<span class="op">,</span></span>
+<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a>    <span class="dt">max_LST</span><span class="op">:</span> <span class="fu">getJoinedValue</span>(f<span class="op">,</span> <span class="st">'lst_match'</span><span class="op">,</span> <span class="st">'max'</span>)<span class="op">,</span></span>
+<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a>    <span class="dt">std_LST</span><span class="op">:</span> <span class="fu">getJoinedValue</span>(f<span class="op">,</span> <span class="st">'lst_match'</span><span class="op">,</span> <span class="st">'stdDev'</span>)<span class="op">,</span></span>
+<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a>    <span class="dt">UHI_proportion</span><span class="op">:</span> <span class="fu">getJoinedValue</span>(f<span class="op">,</span> <span class="st">'uhi_match'</span><span class="op">,</span> <span class="st">'UHI_proportion'</span>)<span class="op">,</span></span>
+<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a>    <span class="dt">green_pct</span><span class="op">:</span> <span class="fu">getJoinedValue</span>(f<span class="op">,</span> <span class="st">'green_match'</span><span class="op">,</span> <span class="st">'green_pct'</span>)<span class="op">,</span></span>
+<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a>    <span class="dt">lack_green_pct</span><span class="op">:</span> <span class="fu">getJoinedValue</span>(f<span class="op">,</span> <span class="st">'green_match'</span><span class="op">,</span> <span class="st">'lack_green_pct'</span>)<span class="op">,</span></span>
+<span id="cb3-86"><a href="#cb3-86" aria-hidden="true" tabindex="-1"></a>    <span class="dt">mean_NDVI</span><span class="op">:</span> <span class="fu">getJoinedValue</span>(f<span class="op">,</span> <span class="st">'ndvi_match'</span><span class="op">,</span> <span class="st">'mean_NDVI'</span>)<span class="op">,</span></span>
+<span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a>    <span class="dt">HRI</span><span class="op">:</span> <span class="fu">getJoinedValue</span>(f<span class="op">,</span> <span class="st">'hri_match'</span><span class="op">,</span> <span class="st">'HRI'</span>)</span>
+<span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
+<span id="cb3-90"><a href="#cb3-90" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 </section>
 <section id="interactive-visualization-and-analysis" class="level3">
 <h3 class="anchored" data-anchor-id="interactive-visualization-and-analysis">2. Interactive Visualization and Analysis</h3>
-<section id="national-overview" class="level4">
-<h4 class="anchored" data-anchor-id="national-overview">National Overview</h4>
-<p>At startup, national-level statistics are displayed, highlighting aggregated data. A pie chart shows population risk distribution across susceptibility zones (Low, Medium, High), and a bar chart lists the top 5 districts by impact metric, allowing users to switch metrics and zoom into a district by clicking a bar.</p>
+<section id="london-overview" class="level4">
+<h4 class="anchored" data-anchor-id="london-overview">London Overview</h4>
+<p>At startup, the application displays the overall distribution of heat risk across London by borough, using a colour gradient to show different risk levels and help users quickly identify high-risk areas.</p>
+<p>The left dashboard summarises key metrics, including average surface temperature, UHI proportion, green space coverage and HRI. It also shows the number of boroughs in each risk category and the top five boroughs with the highest HRI.</p>
 </section>
-<section id="susceptibility-zones" class="level4">
-<h4 class="anchored" data-anchor-id="susceptibility-zones">Susceptibility Zones</h4>
-<p>Susceptibility zones are defined as Low (&lt;0.3), Medium (0.3–0.5), and High (&gt;0.5), identified by analyzing the distribution of susceptibility values from the built Susceptibility model.</p>
+<section id="heat-risk-index-classification" class="level4">
+<h4 class="anchored" data-anchor-id="heat-risk-index-classification">Heat Risk Index Classification</h4>
+<p>Following Elmarakby and Elkadi (2024), the HRI ranges from 3 to 15 and is divided into five categories for clearer comparison across boroughs.</p>
 <div class="scroll-container" style="overflow-y: scroll; height: 300px; padding:20px ">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (hri <span class="op">&lt;=</span> <span class="dv">5</span>) {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="fu">translate</span>(<span class="st">'Very Low Risk'</span>)<span class="op">;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (hri <span class="op">&lt;=</span> <span class="dv">7</span>) {</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="fu">translate</span>(<span class="st">'Low Risk'</span>)<span class="op">;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (hri <span class="op">&lt;=</span> <span class="dv">10</span>) {</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="fu">translate</span>(<span class="st">'Medium Risk'</span>)<span class="op">;</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (hri <span class="op">&lt;=</span> <span class="dv">12</span>) {</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="fu">translate</span>(<span class="st">'High Risk'</span>)<span class="op">;</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="fu">translate</span>(<span class="st">'Very High Risk'</span>)<span class="op">;</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="district-level-analysis" class="level4">
-<h4 class="anchored" data-anchor-id="district-level-analysis">District-Level Analysis</h4>
-<p>This view visualizes precomputed district-level metrics, comparing them with national averages and the two nearest districts. Historical landslides are mapped, with popups displaying aggregated impact details (e.g., deaths, injuries) within a 300m radius of a clicked point.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="borough-level-analysis" class="level4">
+<h4 class="anchored" data-anchor-id="borough-level-analysis">Borough-level Analysis</h4>
+<p>Users can select a borough from the drop-down menu or click directly on the map to view detailed information. The dashboard then displays population density, heat exposure, green space conditions, the final HRI score and its corresponding risk level.</p>
+<div class="scroll-container" style="overflow-y: scroll; height: 300px; padding:20px ">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Create a reusable indicator card for the selected borough panel</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">createIndicatorCard</span>(title<span class="op">,</span> value<span class="op">,</span> unit<span class="op">,</span> description<span class="op">,</span> valueColor<span class="op">,</span> borderColor) {</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  valueColor <span class="op">=</span> valueColor <span class="op">||</span> UI_STYLE<span class="op">.</span><span class="at">text</span><span class="op">;</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  borderColor <span class="op">=</span> borderColor <span class="op">||</span> UI_STYLE<span class="op">.</span><span class="at">border</span><span class="op">;</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> ui<span class="op">.</span><span class="fu">Panel</span>({</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">widgets</span><span class="op">:</span> [</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>      ui<span class="op">.</span><span class="fu">Label</span>(title<span class="op">,</span> {</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>        <span class="dt">fontSize</span><span class="op">:</span> <span class="st">'12px'</span><span class="op">,</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>        <span class="dt">fontWeight</span><span class="op">:</span> <span class="st">'bold'</span><span class="op">,</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>        <span class="dt">color</span><span class="op">:</span> UI_STYLE<span class="op">.</span><span class="at">muted</span><span class="op">,</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>        <span class="dt">margin</span><span class="op">:</span> <span class="st">'0 0 3px 0'</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>      })<span class="op">,</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>      ui<span class="op">.</span><span class="fu">Label</span>(value <span class="op">+</span> unit<span class="op">,</span> {</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>        <span class="dt">fontSize</span><span class="op">:</span> <span class="st">'20px'</span><span class="op">,</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>        <span class="dt">fontWeight</span><span class="op">:</span> <span class="st">'bold'</span><span class="op">,</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>        <span class="dt">color</span><span class="op">:</span> valueColor<span class="op">,</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>        <span class="dt">margin</span><span class="op">:</span> <span class="st">'0 0 3px 0'</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>      })<span class="op">,</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>      ui<span class="op">.</span><span class="fu">Label</span>(description<span class="op">,</span> {</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>        <span class="dt">fontSize</span><span class="op">:</span> <span class="st">'10px'</span><span class="op">,</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>        <span class="dt">color</span><span class="op">:</span> UI_STYLE<span class="op">.</span><span class="at">muted</span><span class="op">,</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>        <span class="dt">margin</span><span class="op">:</span> <span class="st">'0'</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>      })</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>    ]<span class="op">,</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    <span class="dt">layout</span><span class="op">:</span> ui<span class="op">.</span><span class="at">Panel</span><span class="op">.</span><span class="at">Layout</span><span class="op">.</span><span class="fu">flow</span>(<span class="st">'vertical'</span>)<span class="op">,</span></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>    <span class="dt">style</span><span class="op">:</span> {</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>      <span class="dt">backgroundColor</span><span class="op">:</span> <span class="st">'#ffffff'</span><span class="op">,</span></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>      <span class="dt">border</span><span class="op">:</span> <span class="st">'1px solid '</span> <span class="op">+</span> borderColor<span class="op">,</span></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>      <span class="dt">padding</span><span class="op">:</span> <span class="st">'9px'</span><span class="op">,</span></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>      <span class="dt">margin</span><span class="op">:</span> <span class="st">'5px 0'</span></span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a><span class="co">// Update the left panel when a borough is selected</span></span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">updateStatisticsPanel</span>(p) {</span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>  statisticsPanel<span class="op">.</span><span class="fu">clear</span>()<span class="op">;</span></span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>  statisticsPanel<span class="op">.</span><span class="fu">add</span>(ui<span class="op">.</span><span class="fu">Label</span>(p<span class="op">.</span><span class="at">LAD22NM</span><span class="op">,</span> {</span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>    <span class="dt">fontSize</span><span class="op">:</span> <span class="st">'18px'</span><span class="op">,</span></span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>    <span class="dt">fontWeight</span><span class="op">:</span> <span class="st">'bold'</span><span class="op">,</span></span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>    <span class="dt">color</span><span class="op">:</span> UI_STYLE<span class="op">.</span><span class="at">text</span><span class="op">,</span></span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>    <span class="dt">margin</span><span class="op">:</span> <span class="st">'0 0 4px 0'</span></span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>  }))<span class="op">;</span></span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>  statisticsPanel<span class="op">.</span><span class="fu">add</span>(ui<span class="op">.</span><span class="fu">Label</span>(<span class="fu">translate</span>(<span class="st">'Borough-level summary indicators'</span>)<span class="op">,</span> {</span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>    <span class="dt">fontSize</span><span class="op">:</span> <span class="st">'11px'</span><span class="op">,</span></span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a>    <span class="dt">color</span><span class="op">:</span> UI_STYLE<span class="op">.</span><span class="at">muted</span><span class="op">,</span></span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>    <span class="dt">margin</span><span class="op">:</span> <span class="st">'0 0 8px 0'</span></span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a>  }))<span class="op">;</span></span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a>  statisticsPanel<span class="op">.</span><span class="fu">add</span>(<span class="fu">createDividerPanel</span>())<span class="op">;</span></span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Population indicators</span></span>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a>  statisticsPanel<span class="op">.</span><span class="fu">add</span>(<span class="fu">createSectionTitle</span>(<span class="fu">translate</span>(<span class="st">'Population'</span>)))<span class="op">;</span></span>
+<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a>  statisticsPanel<span class="op">.</span><span class="fu">add</span>(<span class="fu">createIndicatorCard</span>(</span>
+<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a>    <span class="fu">translate</span>(<span class="st">'Total Population'</span>)<span class="op">,</span></span>
+<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a>    <span class="fu">formatPopulation</span>(p<span class="op">.</span><span class="at">borough_pop</span>)<span class="op">,</span></span>
+<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a>    <span class="st">''</span><span class="op">,</span></span>
+<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a>    <span class="fu">translate</span>(<span class="st">'Based on 2021 Census population data.'</span>)<span class="op">,</span></span>
+<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a>    <span class="st">'#2563eb'</span><span class="op">,</span></span>
+<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a>    <span class="st">'#bfdbfe'</span></span>
+<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a>  ))<span class="op">;</span></span>
+<span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-72"><a href="#cb5-72" aria-hidden="true" tabindex="-1"></a>  statisticsPanel<span class="op">.</span><span class="fu">add</span>(<span class="fu">createIndicatorCard</span>(</span>
+<span id="cb5-73"><a href="#cb5-73" aria-hidden="true" tabindex="-1"></a>    <span class="fu">translate</span>(<span class="st">'Population Density LQ'</span>)<span class="op">,</span></span>
+<span id="cb5-74"><a href="#cb5-74" aria-hidden="true" tabindex="-1"></a>    <span class="fu">formatValue</span>(p<span class="op">.</span><span class="at">mean_density_LQ</span><span class="op">,</span> <span class="dv">3</span>)<span class="op">,</span></span>
+<span id="cb5-75"><a href="#cb5-75" aria-hidden="true" tabindex="-1"></a>    <span class="st">''</span><span class="op">,</span></span>
+<span id="cb5-76"><a href="#cb5-76" aria-hidden="true" tabindex="-1"></a>    <span class="fu">translate</span>(<span class="st">'Relative to the London average. Values above 1 indicate higher-than-average density.'</span>)<span class="op">,</span></span>
+<span id="cb5-77"><a href="#cb5-77" aria-hidden="true" tabindex="-1"></a>    <span class="st">'#2563eb'</span><span class="op">,</span></span>
+<span id="cb5-78"><a href="#cb5-78" aria-hidden="true" tabindex="-1"></a>    <span class="st">'#bfdbfe'</span></span>
+<span id="cb5-79"><a href="#cb5-79" aria-hidden="true" tabindex="-1"></a>  ))<span class="op">;</span></span>
+<span id="cb5-80"><a href="#cb5-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-81"><a href="#cb5-81" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Heat exposure indicators</span></span>
+<span id="cb5-82"><a href="#cb5-82" aria-hidden="true" tabindex="-1"></a>  statisticsPanel<span class="op">.</span><span class="fu">add</span>(<span class="fu">createSectionTitle</span>(<span class="fu">translate</span>(<span class="st">'Heat Exposure'</span>)))<span class="op">;</span></span>
+<span id="cb5-83"><a href="#cb5-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-84"><a href="#cb5-84" aria-hidden="true" tabindex="-1"></a>  statisticsPanel<span class="op">.</span><span class="fu">add</span>(<span class="fu">createIndicatorCard</span>(</span>
+<span id="cb5-85"><a href="#cb5-85" aria-hidden="true" tabindex="-1"></a>    <span class="fu">translate</span>(<span class="st">'Mean Land Surface Temperature'</span>)<span class="op">,</span></span>
+<span id="cb5-86"><a href="#cb5-86" aria-hidden="true" tabindex="-1"></a>    <span class="fu">formatValue</span>(p<span class="op">.</span><span class="at">mean_LST</span><span class="op">,</span> <span class="dv">2</span>)<span class="op">,</span></span>
+<span id="cb5-87"><a href="#cb5-87" aria-hidden="true" tabindex="-1"></a>    <span class="st">' °C'</span><span class="op">,</span></span>
+<span id="cb5-88"><a href="#cb5-88" aria-hidden="true" tabindex="-1"></a>    <span class="fu">translate</span>(<span class="st">'Average summer LST derived from Landsat 8/9.'</span>)<span class="op">,</span></span>
+<span id="cb5-89"><a href="#cb5-89" aria-hidden="true" tabindex="-1"></a>    <span class="st">'#ea580c'</span><span class="op">,</span></span>
+<span id="cb5-90"><a href="#cb5-90" aria-hidden="true" tabindex="-1"></a>    <span class="st">'#fed7aa'</span></span>
+<span id="cb5-91"><a href="#cb5-91" aria-hidden="true" tabindex="-1"></a>  ))<span class="op">;</span></span>
+<span id="cb5-92"><a href="#cb5-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-93"><a href="#cb5-93" aria-hidden="true" tabindex="-1"></a>  statisticsPanel<span class="op">.</span><span class="fu">add</span>(<span class="fu">createIndicatorCard</span>(</span>
+<span id="cb5-94"><a href="#cb5-94" aria-hidden="true" tabindex="-1"></a>    <span class="fu">translate</span>(<span class="st">'UHI Proportion'</span>)<span class="op">,</span></span>
+<span id="cb5-95"><a href="#cb5-95" aria-hidden="true" tabindex="-1"></a>    <span class="fu">percentValue</span>(p<span class="op">.</span><span class="at">UHI_proportion</span><span class="op">,</span> <span class="dv">2</span>)<span class="op">,</span></span>
+<span id="cb5-96"><a href="#cb5-96" aria-hidden="true" tabindex="-1"></a>    <span class="st">' %'</span><span class="op">,</span></span>
+<span id="cb5-97"><a href="#cb5-97" aria-hidden="true" tabindex="-1"></a>    <span class="fu">translate</span>(<span class="st">'Share of borough pixels above the UHI threshold.'</span>)<span class="op">,</span></span>
+<span id="cb5-98"><a href="#cb5-98" aria-hidden="true" tabindex="-1"></a>    <span class="st">'#ea580c'</span><span class="op">,</span></span>
+<span id="cb5-99"><a href="#cb5-99" aria-hidden="true" tabindex="-1"></a>    <span class="st">'#fed7aa'</span></span>
+<span id="cb5-100"><a href="#cb5-100" aria-hidden="true" tabindex="-1"></a>  ))<span class="op">;</span></span>
+<span id="cb5-101"><a href="#cb5-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-102"><a href="#cb5-102" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Green space and vegetation indicators</span></span>
+<span id="cb5-103"><a href="#cb5-103" aria-hidden="true" tabindex="-1"></a>  statisticsPanel<span class="op">.</span><span class="fu">add</span>(<span class="fu">createSectionTitle</span>(<span class="fu">translate</span>(<span class="st">'Green Space &amp; Vegetation'</span>)))<span class="op">;</span></span>
+<span id="cb5-104"><a href="#cb5-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-105"><a href="#cb5-105" aria-hidden="true" tabindex="-1"></a>  statisticsPanel<span class="op">.</span><span class="fu">add</span>(<span class="fu">createIndicatorCard</span>(</span>
+<span id="cb5-106"><a href="#cb5-106" aria-hidden="true" tabindex="-1"></a>    <span class="fu">translate</span>(<span class="st">'Mean NDVI'</span>)<span class="op">,</span></span>
+<span id="cb5-107"><a href="#cb5-107" aria-hidden="true" tabindex="-1"></a>    <span class="fu">formatValue</span>(p<span class="op">.</span><span class="at">mean_NDVI</span><span class="op">,</span> <span class="dv">3</span>)<span class="op">,</span></span>
+<span id="cb5-108"><a href="#cb5-108" aria-hidden="true" tabindex="-1"></a>    <span class="st">''</span><span class="op">,</span></span>
+<span id="cb5-109"><a href="#cb5-109" aria-hidden="true" tabindex="-1"></a>    <span class="fu">translate</span>(<span class="st">'Higher NDVI generally indicates denser vegetation.'</span>)<span class="op">,</span></span>
+<span id="cb5-110"><a href="#cb5-110" aria-hidden="true" tabindex="-1"></a>    <span class="st">'#15803d'</span><span class="op">,</span></span>
+<span id="cb5-111"><a href="#cb5-111" aria-hidden="true" tabindex="-1"></a>    <span class="st">'#bbf7d0'</span></span>
+<span id="cb5-112"><a href="#cb5-112" aria-hidden="true" tabindex="-1"></a>  ))<span class="op">;</span></span>
+<span id="cb5-113"><a href="#cb5-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-114"><a href="#cb5-114" aria-hidden="true" tabindex="-1"></a>  statisticsPanel<span class="op">.</span><span class="fu">add</span>(<span class="fu">createIndicatorCard</span>(</span>
+<span id="cb5-115"><a href="#cb5-115" aria-hidden="true" tabindex="-1"></a>    <span class="fu">translate</span>(<span class="st">'Green Cover'</span>)<span class="op">,</span></span>
+<span id="cb5-116"><a href="#cb5-116" aria-hidden="true" tabindex="-1"></a>    <span class="fu">formatValue</span>(p<span class="op">.</span><span class="at">green_pct</span><span class="op">,</span> <span class="dv">2</span>)<span class="op">,</span></span>
+<span id="cb5-117"><a href="#cb5-117" aria-hidden="true" tabindex="-1"></a>    <span class="st">' %'</span><span class="op">,</span></span>
+<span id="cb5-118"><a href="#cb5-118" aria-hidden="true" tabindex="-1"></a>    <span class="fu">translate</span>(<span class="st">'Share of borough area classified as green cover.'</span>)<span class="op">,</span></span>
+<span id="cb5-119"><a href="#cb5-119" aria-hidden="true" tabindex="-1"></a>    <span class="st">'#15803d'</span><span class="op">,</span></span>
+<span id="cb5-120"><a href="#cb5-120" aria-hidden="true" tabindex="-1"></a>    <span class="st">'#bbf7d0'</span></span>
+<span id="cb5-121"><a href="#cb5-121" aria-hidden="true" tabindex="-1"></a>  ))<span class="op">;</span></span>
+<span id="cb5-122"><a href="#cb5-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-123"><a href="#cb5-123" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Integrated heat risk indicators</span></span>
+<span id="cb5-124"><a href="#cb5-124" aria-hidden="true" tabindex="-1"></a>  statisticsPanel<span class="op">.</span><span class="fu">add</span>(<span class="fu">createSectionTitle</span>(<span class="fu">translate</span>(<span class="st">'Integrated Heat Risk'</span>)))<span class="op">;</span></span>
+<span id="cb5-125"><a href="#cb5-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-126"><a href="#cb5-126" aria-hidden="true" tabindex="-1"></a>  statisticsPanel<span class="op">.</span><span class="fu">add</span>(<span class="fu">createIndicatorCard</span>(</span>
+<span id="cb5-127"><a href="#cb5-127" aria-hidden="true" tabindex="-1"></a>    <span class="fu">translate</span>(<span class="st">'Heat Risk Index'</span>)<span class="op">,</span></span>
+<span id="cb5-128"><a href="#cb5-128" aria-hidden="true" tabindex="-1"></a>    <span class="fu">formatValue</span>(p<span class="op">.</span><span class="at">HRI</span><span class="op">,</span> <span class="dv">2</span>)<span class="op">,</span></span>
+<span id="cb5-129"><a href="#cb5-129" aria-hidden="true" tabindex="-1"></a>    <span class="st">' / 15'</span><span class="op">,</span></span>
+<span id="cb5-130"><a href="#cb5-130" aria-hidden="true" tabindex="-1"></a>    <span class="fu">translate</span>(<span class="st">'Borough-level heat risk index.'</span>)<span class="op">,</span></span>
+<span id="cb5-131"><a href="#cb5-131" aria-hidden="true" tabindex="-1"></a>    <span class="st">'#dc2626'</span><span class="op">,</span></span>
+<span id="cb5-132"><a href="#cb5-132" aria-hidden="true" tabindex="-1"></a>    <span class="st">'#fecaca'</span></span>
+<span id="cb5-133"><a href="#cb5-133" aria-hidden="true" tabindex="-1"></a>  ))<span class="op">;</span></span>
+<span id="cb5-134"><a href="#cb5-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-135"><a href="#cb5-135" aria-hidden="true" tabindex="-1"></a>  statisticsPanel<span class="op">.</span><span class="fu">add</span>(<span class="fu">createIndicatorCard</span>(</span>
+<span id="cb5-136"><a href="#cb5-136" aria-hidden="true" tabindex="-1"></a>    <span class="fu">translate</span>(<span class="st">'Risk Level'</span>)<span class="op">,</span></span>
+<span id="cb5-137"><a href="#cb5-137" aria-hidden="true" tabindex="-1"></a>    <span class="fu">getHriRiskLevel</span>(p<span class="op">.</span><span class="at">HRI</span>)<span class="op">,</span></span>
+<span id="cb5-138"><a href="#cb5-138" aria-hidden="true" tabindex="-1"></a>    <span class="st">''</span><span class="op">,</span></span>
+<span id="cb5-139"><a href="#cb5-139" aria-hidden="true" tabindex="-1"></a>    <span class="fu">translate</span>(<span class="st">'Heat risk classification based on the borough-level HRI score.'</span>)<span class="op">,</span></span>
+<span id="cb5-140"><a href="#cb5-140" aria-hidden="true" tabindex="-1"></a>    <span class="st">'#dc2626'</span><span class="op">,</span></span>
+<span id="cb5-141"><a href="#cb5-141" aria-hidden="true" tabindex="-1"></a>    <span class="st">'#fecaca'</span></span>
+<span id="cb5-142"><a href="#cb5-142" aria-hidden="true" tabindex="-1"></a>  ))<span class="op">;</span></span>
+<span id="cb5-143"><a href="#cb5-143" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </section>
-<section id="methodology-overview" class="level4">
-<h4 class="anchored" data-anchor-id="methodology-overview">Methodology Overview</h4>
-<p>This view allows users to compare the two methodologies (Environmental Susceptibility and RF) using a split panel. It displays the RF probability map and normalized risk map for populated areas, with a draggable divider for spatial comparison, focusing on population exposure.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="split-layer-comparison-view" class="level4">
+<h4 class="anchored" data-anchor-id="split-layer-comparison-view">Split Layer Comparison View</h4>
+<p>In addition to the London overview and borough-level analysis, the app includes a split layer comparison view to help users explore the spatial relationships between different heat risk indicators.</p>
+<p>The split view contains two linked maps displayed side by side. Users can independently select the layer shown on the left and right maps, including Mean LST, UHI pixels, Green Cover, Mean NDVI, Population Density LQ and London HRI. This allows users to directly compare how heat exposure, vegetation conditions and population density overlap across London.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">createSplitComparisonView</span>() {</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  splitLeftMap <span class="op">=</span> ui<span class="op">.</span><span class="fu">Map</span>()<span class="op">;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  splitRightMap <span class="op">=</span> ui<span class="op">.</span><span class="fu">Map</span>()<span class="op">;</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  splitLeftMap<span class="op">.</span><span class="fu">setOptions</span>(<span class="st">'Greyscale'</span><span class="op">,</span> {</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Greyscale'</span><span class="op">:</span> greyBasemap</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  splitRightMap<span class="op">.</span><span class="fu">setOptions</span>(<span class="st">'Greyscale'</span><span class="op">,</span> {</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Greyscale'</span><span class="op">:</span> greyBasemap</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> layerDict <span class="op">=</span> <span class="fu">getComparisonLayerDictionary</span>()<span class="op">;</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  splitLeftLayer <span class="op">=</span> ui<span class="op">.</span><span class="at">Map</span><span class="op">.</span><span class="fu">Layer</span>(</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    layerDict[<span class="st">'Mean LST May-Sep 2022'</span>]<span class="op">.</span><span class="at">image</span><span class="op">,</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    layerDict[<span class="st">'Mean LST May-Sep 2022'</span>]<span class="op">.</span><span class="at">vis</span><span class="op">,</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    layerDict[<span class="st">'Mean LST May-Sep 2022'</span>]<span class="op">.</span><span class="at">label</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>  )<span class="op">;</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>  splitRightLayer <span class="op">=</span> ui<span class="op">.</span><span class="at">Map</span><span class="op">.</span><span class="fu">Layer</span>(</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    layerDict[<span class="st">'London HRI'</span>]<span class="op">.</span><span class="at">image</span><span class="op">,</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    layerDict[<span class="st">'London HRI'</span>]<span class="op">.</span><span class="at">vis</span><span class="op">,</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>    layerDict[<span class="st">'London HRI'</span>]<span class="op">.</span><span class="at">label</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>  )<span class="op">;</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>  splitLeftMap<span class="op">.</span><span class="fu">layers</span>()<span class="op">.</span><span class="fu">add</span>(splitLeftLayer)<span class="op">;</span></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>  splitRightMap<span class="op">.</span><span class="fu">layers</span>()<span class="op">.</span><span class="fu">add</span>(splitRightLayer)<span class="op">;</span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> boroughBoundaryStyle <span class="op">=</span> {</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>    <span class="dt">color</span><span class="op">:</span> <span class="st">'#111827'</span><span class="op">,</span></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>    <span class="dt">width</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span></span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>    <span class="dt">fillColor</span><span class="op">:</span> <span class="st">'#00000000'</span></span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>  splitLeftMap<span class="op">.</span><span class="fu">layers</span>()<span class="op">.</span><span class="fu">add</span>(ui<span class="op">.</span><span class="at">Map</span><span class="op">.</span><span class="fu">Layer</span>(</span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>    boroughs<span class="op">.</span><span class="fu">style</span>(boroughBoundaryStyle)<span class="op">,</span></span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>    {}<span class="op">,</span></span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>    <span class="fu">translate</span>(<span class="st">'Borough boundaries'</span>)</span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>  ))<span class="op">;</span></span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>  splitRightMap<span class="op">.</span><span class="fu">layers</span>()<span class="op">.</span><span class="fu">add</span>(ui<span class="op">.</span><span class="at">Map</span><span class="op">.</span><span class="fu">Layer</span>(</span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>    boroughs<span class="op">.</span><span class="fu">style</span>(boroughBoundaryStyle)<span class="op">,</span></span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a>    {}<span class="op">,</span></span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a>    <span class="fu">translate</span>(<span class="st">'Borough boundaries'</span>)</span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a>  ))<span class="op">;</span></span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a>  splitLeftTitle <span class="op">=</span> <span class="fu">createSplitTitleLabel</span>(</span>
+<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a>    layerDict[<span class="st">'Mean LST May-Sep 2022'</span>]<span class="op">.</span><span class="at">label</span><span class="op">,</span></span>
+<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a>    <span class="st">'top-left'</span></span>
+<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a>  )<span class="op">;</span></span>
+<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a>  splitRightTitle <span class="op">=</span> <span class="fu">createSplitTitleLabel</span>(</span>
+<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a>    layerDict[<span class="st">'London HRI'</span>]<span class="op">.</span><span class="at">label</span><span class="op">,</span></span>
+<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a>    <span class="st">'top-right'</span></span>
+<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a>  )<span class="op">;</span></span>
+<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a>  splitLeftMap<span class="op">.</span><span class="fu">add</span>(splitLeftTitle)<span class="op">;</span></span>
+<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a>  splitRightMap<span class="op">.</span><span class="fu">add</span>(splitRightTitle)<span class="op">;</span></span>
+<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a>  splitLeftMap<span class="op">.</span><span class="fu">add</span>(<span class="fu">createSplitControlPanel</span>())<span class="op">;</span></span>
+<span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-64"><a href="#cb6-64" aria-hidden="true" tabindex="-1"></a>  splitLeftMap<span class="op">.</span><span class="fu">centerObject</span>(boroughs<span class="op">,</span> <span class="dv">10</span>)<span class="op">;</span></span>
+<span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a>  splitRightMap<span class="op">.</span><span class="fu">centerObject</span>(boroughs<span class="op">,</span> <span class="dv">10</span>)<span class="op">;</span></span>
+<span id="cb6-66"><a href="#cb6-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-67"><a href="#cb6-67" aria-hidden="true" tabindex="-1"></a>  splitLeftMap<span class="op">.</span><span class="fu">onClick</span>(handleSplitMapClick)<span class="op">;</span></span>
+<span id="cb6-68"><a href="#cb6-68" aria-hidden="true" tabindex="-1"></a>  splitRightMap<span class="op">.</span><span class="fu">onClick</span>(handleSplitMapClick)<span class="op">;</span></span>
+<span id="cb6-69"><a href="#cb6-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-70"><a href="#cb6-70" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> splitMapLinker <span class="op">=</span> ui<span class="op">.</span><span class="at">Map</span><span class="op">.</span><span class="fu">Linker</span>([</span>
+<span id="cb6-71"><a href="#cb6-71" aria-hidden="true" tabindex="-1"></a>    splitLeftMap<span class="op">,</span></span>
+<span id="cb6-72"><a href="#cb6-72" aria-hidden="true" tabindex="-1"></a>    splitRightMap</span>
+<span id="cb6-73"><a href="#cb6-73" aria-hidden="true" tabindex="-1"></a>  ])<span class="op">;</span></span>
+<span id="cb6-74"><a href="#cb6-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-75"><a href="#cb6-75" aria-hidden="true" tabindex="-1"></a>  splitPanelWidget <span class="op">=</span> ui<span class="op">.</span><span class="fu">SplitPanel</span>({</span>
+<span id="cb6-76"><a href="#cb6-76" aria-hidden="true" tabindex="-1"></a>    <span class="dt">firstPanel</span><span class="op">:</span> splitLeftMap<span class="op">,</span></span>
+<span id="cb6-77"><a href="#cb6-77" aria-hidden="true" tabindex="-1"></a>    <span class="dt">secondPanel</span><span class="op">:</span> splitRightMap<span class="op">,</span></span>
+<span id="cb6-78"><a href="#cb6-78" aria-hidden="true" tabindex="-1"></a>    <span class="dt">orientation</span><span class="op">:</span> <span class="st">'horizontal'</span><span class="op">,</span></span>
+<span id="cb6-79"><a href="#cb6-79" aria-hidden="true" tabindex="-1"></a>    <span class="dt">wipe</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb6-80"><a href="#cb6-80" aria-hidden="true" tabindex="-1"></a>    <span class="dt">style</span><span class="op">:</span> {</span>
+<span id="cb6-81"><a href="#cb6-81" aria-hidden="true" tabindex="-1"></a>      <span class="dt">stretch</span><span class="op">:</span> <span class="st">'both'</span></span>
+<span id="cb6-82"><a href="#cb6-82" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb6-83"><a href="#cb6-83" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
+<span id="cb6-84"><a href="#cb6-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-85"><a href="#cb6-85" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> splitPanelWidget<span class="op">;</span></span>
+<span id="cb6-86"><a href="#cb6-86" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 </section>
 <section id="insights-and-objectives" class="level3">
 <h3 class="anchored" data-anchor-id="insights-and-objectives">3. Insights and Objectives</h3>
+<p>The app provides actionable insights for urban heat adaptation in London by identifying high-risk boroughs and showing how population density, heat exposure and vegetation conditions shape overall heat risk. It supports:</p>
+<p><strong>Risk Prioritization:</strong> Highlights boroughs with higher HRI scores and identifies areas where heat adaptation measures may be more urgent.</p>
+<p><strong>Localized Insights:</strong> Enables borough-level analysis by showing local population density LQ, mean LST, UHI proportion, green cover, NDVI and risk level.</p>
+<p><strong>Academic Research:</strong> Provides an interactive platform for exploring urban heat risk beyond static maps, supporting spatial comparison between environmental exposure, vegetation conditions and population concentration.</p>
 </section>
 <section id="limitations-and-potential-expansion" class="level3">
 <h3 class="anchored" data-anchor-id="limitations-and-potential-expansion">4. Limitations and Potential Expansion</h3>
+<p><strong>Static Indicators:</strong> Current indicators are precomputed, so the app does not respond to real-time heat events or changing environmental conditions. Adding live weather data or more recent satellite imagery could improve responsiveness.</p>
+<p><strong>Granularity of Analysis:</strong> The app mainly focuses on borough-level analysis, which may hide smaller-scale inequalities within boroughs. Future versions could include LSOA-level or neighbourhood-level analysis.</p>
+<p><strong>Index Design:</strong> The HRI currently uses selected indicators: population density, UHI and lack of green cover. Future development could include additional vulnerability factors, such as age, income, housing conditions or health data.</p>
+<p><strong>Report Export:</strong> The app does not currently support report export. Adding this function would help users save borough-level summaries for planning, communication or further analysis.</p>
 </section>
 </section>
 <section id="references" class="level1">
 <h1>References</h1>
+<p>Climate Resilience Center (2023). Hot Cities, Chilled Economies: London, United Kingdom. Available at: https://onebillionresilient.org/hot-cities-chilled-economies-london/.</p>
+<p>Simpson, C.H., Brousse, O. and Heaviside, C. (2024). Estimated mortality attributable to the urban heat island during the record-breaking 2022 heatwave in London. Environmental Research Letters, 19(9), pp.094047–094047. doi: https://doi.org/10.1088/1748-9326/ad6c65.</p>
+<p>Elmarakby, E. and Elkadi, H. (2024). Prioritising urban heat island mitigation interventions: Mapping a heat risk index. The Science of The Total Environment, 948, pp.174927–174927. doi:https://doi.org/10.1016/j.scitotenv.2024.174927.</p>
 
 
 </section>

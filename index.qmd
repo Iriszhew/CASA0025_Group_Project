@@ -6,7 +6,7 @@ css: style.css
 
 ## Project Summary
 
-1111
+This project develops an interactive spatial Heat Risk Index (HRI) platform for London, aiming to bridge the gap between academic heat-risk research and practical urban governance. By integrating Land Surface Temperature (LST), vegetation indicators, Urban Heat Island (UHI) proportion, and population density LQ, the platform transforms complex spatial datasets into a clear borough-level heat risk assessment. Using precomputed Google Earth Engine layers, the dashboard supports efficient visualisation, localised borough profiling, and split-screen comparison between key indicators. The platform provides actionable insights for urban planners, public health agencies, and climate adaptation teams to identify high-risk areas and prioritise targeted heat mitigation interventions.
 
 ------------------------------------------------------------------------
 
@@ -16,9 +16,72 @@ London faces increasing extreme heat and urban heat island risks, threatening pu
 
 ### End User
 
-1111
+This Heat Risk Index (HRI) is designed for users across urban governance, public health, and spatial analysis in London, including planners, local authorities, public health agencies, and GIS analysts. These users require tools that are both scientifically robust and accessible to support decision-making under increasing heat risks.
+
+While extensive research on urban heat exists, there remains a gap between academic outputs and practical implementation. This project addresses this by integrating land surface temperature, green cover, NDVI, and population density into a single, spatially explicit index, providing a clear and interpretable representation of heat risk across boroughs.
 
 ## Data
+
+<table>
+  <tr>
+    <th>CATEGORY</th>
+    <th>DATASET</th>
+    <th>DESCRIPTION</th>
+    <th>SOURCE</th>
+  </tr>
+
+  <tr>
+    <td rowspan="3">GEE</td>
+    <td>Land Surface Temperature</td>
+    <td class="description">Landsat 8/9 summer surface temperature data</td>
+    <td>
+      <a href="https://developers.google.com/earth-engine/datasets/catalog/LANDSAT_LC08_C02_T1_L2">L8</a> /
+      <a href="https://developers.google.com/earth-engine/datasets/catalog/LANDSAT_LC09_C02_T1_L2">L9</a>
+    </td>
+  </tr>
+
+  <tr>
+    <td>NDVI</td>
+    <td class="description">Landsat 8/9 red and near-infrared bands</td>
+    <td>
+      <a href="https://developers.google.com/earth-engine/datasets/catalog/LANDSAT_LC08_C02_T1_L2">L8</a> /
+      <a href="https://developers.google.com/earth-engine/datasets/catalog/LANDSAT_LC09_C02_T1_L2">L9</a>
+    </td>
+  </tr>
+
+  <tr>
+    <td>Green Cover</td>
+    <td class="description">ESA WorldCover 2020 land cover classes</td>
+    <td><a href="https://developers.google.com/earth-engine/datasets/catalog/ESA_WorldCover_v200">Link</a></td>
+  </tr>
+
+  <tr>
+    <td rowspan="5">Other</td>
+    <td>LSOA Boundaries</td>
+    <td class="description">2021 Lower Layer Super Output Area boundaries</td>
+    <td><a href="https://geoportal.statistics.gov.uk/datasets/ons::lower-layer-super-output-areas-december-2021-boundaries-ew-bsc-v4-2/about">Link</a></td>
+  </tr>
+
+  <tr>
+    <td>London Boundary</td>
+    <td class="description">Greater London study area boundary</td>
+    <td><a href="https://data.london.gov.uk/dataset/statistical-gis-boundary-files-for-london-20od9/">Link</a></td>
+  </tr>
+
+  <tr>
+    <td>Borough Boundaries</td>
+    <td class="description">London borough administrative boundaries</td>
+    <td><a href="https://data.london.gov.uk/dataset/london-boroughs-e55pw/">Link</a></td>
+  </tr>
+
+  <tr>
+    <td>Census Population</td>
+    <td class="description">2021 population and area data at LSOA level</td>
+    <td><a href="https://www.ons.gov.uk/census">Link</a></td>
+  </tr>
+
+</table>
+
 
 ## Methodology
 
@@ -55,50 +118,21 @@ df["HRI"] = (
 ```
 :::
 
-### Susceptibility Model
-
-To recreate Hong et al.'s susceptibility model in GEE, we imported six environmental variables into a weighted linear combination. Each variable was normalized on a 0-1 scale, and in combination with the weights provided a susceptibility score for each pixel. Susceptibility was then normalized 0-1 for the whole of Nepal.
-
-![Susceptibility Model Methodology](images/heat.png)
-
-#### Susceptibility Model Code
-
-<div>
-
-``` j
-```
-
-</div>
-
-### Random Forest Model
-
-To find populated areas most susceptible to landslides, we masked our environmental variables to populated areas, and trained a random forest classifier on landslide and randomly generated non-landslide points from Bipad Portal. Each pixel was scored based on the proportion of decision trees voting landslide.
-
-![Random Forest Model Methodology](images/heat.png) \#### Random Forest Model Code
-
-<div>
-
-```         
-```
-
-</div>
 
 ## Interface
 
-111
+The interface uses two main methods to support heat-risk analysis. First, the borough-level dashboard allows users to select or click a borough and view key indicators, including population density LQ, mean LST, UHI proportion, green cover, NDVI, and HRI score. This supports localised risk profiling. Second, the split-layer comparison view enables users to compare two spatial layers side by side, such as LST and HRI or green cover and NDVI. Together, these tools make complex heat-risk data easier to interpret and help users identify priority areas for targeted urban heat mitigation.
 
-:::::: {.columns layout-align="center"}
+:::: {.columns layout-align="center"}
 ::: {.column width="46%"}
-![District Level View](images/heat.png)
+![District Level View](images/1.png)
 :::
-
 ::: {.column width="2%"}
-:::
-
+::: 
 ::: {.column width="46%"}
-![Methodology View](images/heat.png)
+![Methodology View](images/2.png)
 :::
-::::::
+:::: 
 
 ## The Application
 
@@ -121,23 +155,221 @@ Beyond the core demo, the application includes several features to enhance usabi
 ## How it Works
 
 ### 1. Data Preparation and Precomputations
+To improve the performance of the dashboard, the main spatial calculations were completed in advance and stored as precomputed layers and borough-level indicators. Instead of recalculating all values during user interaction, the app imports processed results and uses them to update the map and information panel.
 
-To handle complex computations, separate scripts were developed for the two methodologies explained above and results are imported into the app as precomputed layers.
 
-#### Imported Precomputed Layers:
+#### Imported and Processed Layers:
 
--   Environmental Landslide Susceptibility: Maps susceptibility using environmental variables.
+**Population Density LQ:** to show how each area compares with the London average.
 
--   Normalized Landslide Susceptibility: Adjusted for population exposure.
+**Mean Land Surface Temperature:** to represent summer heat exposure across London.
 
--   Random Forest Landslide Probability: ML-based risk focused on populated areas.
+**Urban Heat Island Proportion:** to show the proportion of each borough affected by UHI conditions.
 
-#### District-Level Aggregation:
+**Green Cover and NDVI:** to represent the availability and condition of vegetation.
 
-A dedicated script was built to aggregate historical landslide data with impact metrics (e.g., incidents, deaths, injuries, destroyed infrastructure), alongside population and susceptibility metrics per district. It also computes engineered features like incidents per km² and identifies nearest districts (via spatial proximity of centroids) to support comparative analysis.
+**Heat Risk Index:** a pre-processed borough-level HRI table was calculated separately in Python (https://github.com/Iriszhew/CASA0025_Group_Project/blob/main/gw_calculate_HRI.ipynb) and then imported into Google Earth Engine. It combines population density, lack of green cover and UHI exposure into a single risk score
+
+(Table)
+
+
+#### Borough-Level Aggregation:
+
+All indicators were aggregated to the borough scale so that each borough contains a consistent set of summary values. For each borough, the workflow extracts the borough geometry, calculates average heat and vegetation indicators within the boundary, and stores the results as new borough-level attributes. These values are then used by the dashboard when users click or select a borough.
+
 
 ::: {.scroll-container style="overflow-y: scroll; height: 300px; padding:20px "}
+
+``` javascript
+
+// Borough-level population density LQ
+var groupedDensity = censusClean.reduceColumns({
+  selectors: ['borough_name', 'pop', 'census_area_km2'],
+  reducer: ee.Reducer.sum()
+    .repeat(2)
+    .group({
+      groupField: 0,
+      groupName: 'borough_name'
+    })
+});
+
+var boroughDensityStats = ee.FeatureCollection(
+  ee.List(groupedDensity.get('groups')).map(function(item) {
+
+    item = ee.Dictionary(item);
+
+    var sums = ee.List(item.get('sum'));
+    var boroughPop = ee.Number(sums.get(0));
+    var boroughArea = ee.Number(sums.get(1));
+    var boroughDensity = boroughPop.divide(boroughArea);
+
+    return ee.Feature(null, {
+      borough_name: item.get('borough_name'),
+      borough_pop: boroughPop,
+      borough_area_km2: boroughArea,
+      borough_density: boroughDensity
+    });
+  })
+);
+// Borough-level LST statistics
+var boroughLST = lstMean2022.reduceRegions({
+  collection: boroughs,
+  reducer: ee.Reducer.mean()
+    .combine(ee.Reducer.min(), '', true)
+    .combine(ee.Reducer.max(), '', true)
+    .combine(ee.Reducer.stdDev(), '', true),
+  scale: 30,
+  crs: 'EPSG:4326'
+});
+
+// Borough-level UHI proportion
+var uhiBinary = uhiMap
+  .unmask(0)
+  .rename('UHI');
+
+var boroughUHI = uhiBinary.reduceRegions({
+  collection: boroughs,
+  reducer: ee.Reducer.mean(),
+  scale: 30,
+  crs: 'EPSG:4326'
+});
+
+var boroughUHIResult = boroughUHI.map(function(f) {
+  return f.set({
+    UHI_proportion: f.get('mean')
+  });
+});
+
+// Borough-level green cover percentage
+var boroughGreenStats = greenCover.reduceRegions({
+  collection: boroughs,
+  reducer: ee.Reducer.mean(),
+  scale: 10
+});
+
+var boroughGreenResult = boroughGreenStats.map(function(f) {
+  var greenPct = ee.Number(f.get('mean')).multiply(100);
+  var lackGreenPct = ee.Number(100).subtract(greenPct);
+
+  return f.set({
+    green_pct: greenPct,
+    lack_green_pct: lackGreenPct
+  });
+});
+
+// Borough-level mean NDVI
+var boroughNDVI = ndviMean2022.reduceRegions({
+  collection: boroughs,
+  reducer: ee.Reducer.mean(),
+  scale: 30
+});
+
+var boroughNDVIResult = boroughNDVI.map(function(f) {
+  return f.set({
+    mean_NDVI: f.get('mean')
+  });
+});
+```
 :::
+
+Then, population density LQ and the precomputed HRI score are joined to the borough summary table using borough codes. This creates one final dashboard-ready table containing all indicators for each borough.
+
+::: {.scroll-container style="overflow-y: scroll; height: 300px; padding:20px "}
+
+``` javascript
+// Join a secondary FeatureCollection to a primary FeatureCollection by borough code
+function joinByBoroughCode(primary, secondary, matchName) {
+  var join = ee.Join.saveFirst(matchName);
+
+  var filter = ee.Filter.equals({
+    leftField: 'LAD22CD',
+    rightField: 'LAD22CD'
+  });
+
+  return ee.FeatureCollection(join.apply({
+    primary: primary,
+    secondary: secondary,
+    condition: filter
+  }));
+}
+
+// Safely extract values from joined features
+function getJoinedValue(feature, matchName, propertyName) {
+  var emptyFeature = ee.Feature(null);
+
+  var matchedFeature = ee.Feature(
+    ee.Algorithms.If(
+      feature.get(matchName),
+      feature.get(matchName),
+      emptyFeature
+    )
+  );
+
+  return matchedFeature.get(propertyName);
+}
+
+// Join all borough-level indicators
+var dashboardJoined = boroughs;
+
+dashboardJoined = joinByBoroughCode(
+  dashboardJoined,
+  boroughDensityLQResult,
+  'density_match'
+);
+
+dashboardJoined = joinByBoroughCode(
+  dashboardJoined,
+  boroughLST,
+  'lst_match'
+);
+
+dashboardJoined = joinByBoroughCode(
+  dashboardJoined,
+  boroughUHIResult,
+  'uhi_match'
+);
+
+dashboardJoined = joinByBoroughCode(
+  dashboardJoined,
+  boroughGreenResult,
+  'green_match'
+);
+
+dashboardJoined = joinByBoroughCode(
+  dashboardJoined,
+  boroughNDVIResult,
+  'ndvi_match'
+);
+
+dashboardJoined = joinByBoroughCode(
+  dashboardJoined,
+  hriBoroughs,
+  'hri_match'
+);
+
+// Create final dashboard-ready borough table
+var boroughDashboardData = dashboardJoined.map(function(f) {
+  return f.set({
+    borough_pop: getJoinedValue(f, 'density_match', 'borough_pop'),
+    mean_density_LQ: getJoinedValue(f, 'density_match', 'mean_density_LQ'),
+
+    mean_LST: getJoinedValue(f, 'lst_match', 'mean'),
+    min_LST: getJoinedValue(f, 'lst_match', 'min'),
+    max_LST: getJoinedValue(f, 'lst_match', 'max'),
+    std_LST: getJoinedValue(f, 'lst_match', 'stdDev'),
+
+    UHI_proportion: getJoinedValue(f, 'uhi_match', 'UHI_proportion'),
+
+    green_pct: getJoinedValue(f, 'green_match', 'green_pct'),
+    lack_green_pct: getJoinedValue(f, 'green_match', 'lack_green_pct'),
+    mean_NDVI: getJoinedValue(f, 'ndvi_match', 'mean_NDVI'),
+
+    HRI: getJoinedValue(f, 'hri_match', 'HRI')
+  });
+});
+```
+:::
+
 
 ### 2. Interactive Visualization and Analysis
 
@@ -320,16 +552,131 @@ function updateStatisticsPanel(p) {
 :::
 
 
-#### Methodology Overview
+#### Split Layer Comparison View
 
-This view allows users to compare the two methodologies (Environmental Susceptibility and RF) using a split panel. It displays the RF probability map and normalized risk map for populated areas, with a draggable divider for spatial comparison, focusing on population exposure.
+In addition to the London overview and borough-level analysis, the app includes a split layer comparison view to help users explore the spatial relationships between different heat risk indicators.
+
+The split view contains two linked maps displayed side by side. Users can independently select the layer shown on the left and right maps, including Mean LST, UHI pixels, Green Cover, Mean NDVI, Population Density LQ and London HRI. This allows users to directly compare how heat exposure, vegetation conditions and population density overlap across London.
+
 
 ``` javascript
+function createSplitComparisonView() {
+
+  splitLeftMap = ui.Map();
+  splitRightMap = ui.Map();
+
+  splitLeftMap.setOptions('Greyscale', {
+    'Greyscale': greyBasemap
+  });
+
+  splitRightMap.setOptions('Greyscale', {
+    'Greyscale': greyBasemap
+  });
+
+  var layerDict = getComparisonLayerDictionary();
+
+  splitLeftLayer = ui.Map.Layer(
+    layerDict['Mean LST May-Sep 2022'].image,
+    layerDict['Mean LST May-Sep 2022'].vis,
+    layerDict['Mean LST May-Sep 2022'].label
+  );
+
+  splitRightLayer = ui.Map.Layer(
+    layerDict['London HRI'].image,
+    layerDict['London HRI'].vis,
+    layerDict['London HRI'].label
+  );
+
+  splitLeftMap.layers().add(splitLeftLayer);
+  splitRightMap.layers().add(splitRightLayer);
+
+  var boroughBoundaryStyle = {
+    color: '#111827',
+    width: 1,
+    fillColor: '#00000000'
+  };
+
+  splitLeftMap.layers().add(ui.Map.Layer(
+    boroughs.style(boroughBoundaryStyle),
+    {},
+    translate('Borough boundaries')
+  ));
+
+  splitRightMap.layers().add(ui.Map.Layer(
+    boroughs.style(boroughBoundaryStyle),
+    {},
+    translate('Borough boundaries')
+  ));
+
+  splitLeftTitle = createSplitTitleLabel(
+    layerDict['Mean LST May-Sep 2022'].label,
+    'top-left'
+  );
+
+  splitRightTitle = createSplitTitleLabel(
+    layerDict['London HRI'].label,
+    'top-right'
+  );
+
+  splitLeftMap.add(splitLeftTitle);
+  splitRightMap.add(splitRightTitle);
+
+  splitLeftMap.add(createSplitControlPanel());
+
+  splitLeftMap.centerObject(boroughs, 10);
+  splitRightMap.centerObject(boroughs, 10);
+
+  splitLeftMap.onClick(handleSplitMapClick);
+  splitRightMap.onClick(handleSplitMapClick);
+
+  var splitMapLinker = ui.Map.Linker([
+    splitLeftMap,
+    splitRightMap
+  ]);
+
+  splitPanelWidget = ui.SplitPanel({
+    firstPanel: splitLeftMap,
+    secondPanel: splitRightMap,
+    orientation: 'horizontal',
+    wipe: true,
+    style: {
+      stretch: 'both'
+    }
+  });
+
+  return splitPanelWidget;
+}
+
 ```
 
 ### 3. Insights and Objectives
+The app provides actionable insights for urban heat adaptation in London by identifying high-risk boroughs and showing how population density, heat exposure and vegetation conditions shape overall heat risk. It supports:
+
+**Risk Prioritization:**
+Highlights boroughs with higher HRI scores and identifies areas where heat adaptation measures may be more urgent.
+
+**Localized Insights:**
+Enables borough-level analysis by showing local population density LQ, mean LST, UHI proportion, green cover, NDVI and risk level.
+
+**Academic Research:**
+Provides an interactive platform for exploring urban heat risk beyond static maps, supporting spatial comparison between environmental exposure, vegetation conditions and population concentration.
+
+
 
 ### 4. Limitations and Potential Expansion
+
+**Static Indicators:**
+Current indicators are precomputed, so the app does not respond to real-time heat events or changing environmental conditions. Adding live weather data or more recent satellite imagery could improve responsiveness.
+
+**Granularity of Analysis:**
+The app mainly focuses on borough-level analysis, which may hide smaller-scale inequalities within boroughs. Future versions could include LSOA-level or neighbourhood-level analysis.
+
+**Index Design:**
+The HRI currently uses selected indicators: population density, UHI and lack of green cover. Future development could include additional vulnerability factors, such as age, income, housing conditions or health data.
+
+**Report Export:**
+The app does not currently support report export. Adding this function would help users save borough-level summaries for planning, communication or further analysis.
+
 
 # References
 Climate Resilience Center (2023). Hot Cities, Chilled Economies: London, United Kingdom. Available at: https://onebillionresilient.org/hot-cities-chilled-economies-london/. 
