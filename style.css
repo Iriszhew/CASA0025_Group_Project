@@ -174,3 +174,63 @@ code {
 img {
   border-radius: 8px;
 }
+
+/* ---------- TOC active item color ---------- */
+
+.sidebar nav[role="doc-toc"] ul > li > a.active,
+.sidebar nav[role="doc-toc"] ul > li > ul > li > a.active,
+.sidebar nav[role="doc-toc"] ul > li > ul > li > ul > li > a.active {
+  color: #9c8b70 !important;
+  border-left: 2px solid #9c8b70 !important;
+}
+
+.sidebar nav[role="doc-toc"] ul > li > a:hover,
+.sidebar nav[role="doc-toc"] ul > li > ul > li > a:hover,
+.sidebar nav[role="doc-toc"] ul > li > ul > li > ul > li > a:hover {
+  color: #9c8b70 !important;
+}
+
+/* ---------- Right Contents / TOC Styling ---------- */
+
+/* Whole TOC block */
+.sidebar nav[role="doc-toc"] {
+  font-size: 0.88rem;
+  line-height: 1.28;
+}
+
+/* "Contents" title */
+.sidebar nav[role="doc-toc"] .toc-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #3f4228;
+  margin-bottom: 0.7rem;
+}
+
+/* TOC list spacing */
+.sidebar nav[role="doc-toc"] ul {
+  padding-left: 0.7rem;
+}
+
+.sidebar nav[role="doc-toc"] ul > li {
+  margin-bottom: 0.18rem;
+}
+
+/* Normal TOC links */
+.sidebar nav[role="doc-toc"] a {
+  font-size: 0.88rem !important;
+  color: #2f2b28 !important;
+  padding-top: 0.05rem;
+  padding-bottom: 0.05rem;
+}
+
+/* Active TOC item */
+.sidebar nav[role="doc-toc"] a.active {
+  color: #7f6f55 !important;
+  font-weight: 650;
+  border-left: 2px solid #7f6f55 !important;
+}
+
+/* Hover TOC item */
+.sidebar nav[role="doc-toc"] a:hover {
+  color: #7f6f55 !important;
+}
