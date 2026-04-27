@@ -83,7 +83,7 @@ To find populated areas most susceptible to landslides, we masked our environmen
 
 ### Key Features Beyond the Demo
 
-While our demo showcases the app's core functionality, several critical features work behind the scenes to enhance its performance and reliability. In this section, we highlight key capabilities implemented to optimize efficiency and ensure a seamless user experience.
+{{< include carousel_section.qmd >}}
 
 ## How it Works
 
