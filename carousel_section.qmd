@@ -1,9 +1,4 @@
-<<<<<<< HEAD
----
 
----
-=======
->>>>>>> 8a7e66d19eb9f5dac3bae2e6b5e13ca23338f33a
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 library(htmltools)
