@@ -20,7 +20,9 @@ format:
 
     css: style.css
 
-
-
+    grid:
+      body-width: 900px
+      
     smooth-scroll: true
     link-external-newwindow: true
+

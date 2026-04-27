@@ -1,5 +1,5 @@
 ---
-title: "HRI in London"
+title: "London Heat Risk Application"
 title-block-banner: images/heat.png
 css: style.css
 ---

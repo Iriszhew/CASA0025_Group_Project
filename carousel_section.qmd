@@ -1,6 +1,5 @@
 ---
-title: "carousel_section"
-editor: visual
+
 ---
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}

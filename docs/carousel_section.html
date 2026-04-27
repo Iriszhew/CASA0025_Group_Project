@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>London Heat Risk Application</title>
+<title>carousel_section</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,41 +19,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -103,13 +68,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
-<style>
-
-      .quarto-title-block .quarto-title-banner {
-        background-image: url(images/heat.png);
-background-size: cover;
-      }
-</style>
 
 
 <link rel="stylesheet" href="style.css">
@@ -119,145 +77,34 @@ background-size: cover;
 
 <div id="quarto-search-results"></div>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-body">
-      <h1 class="title">London Heat Risk Application</h1>
-                      </div>
-  </div>
-    
-  
-  <div class="quarto-title-meta">
-
-      
-    
-      
-    </div>
-    
-  
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Contents</h2>
-   
-  <ul>
-  <li><a href="#project-summary" id="toc-project-summary" class="nav-link active" data-scroll-target="#project-summary">Project Summary</a>
-  <ul class="collapse">
-  <li><a href="#problem-statement" id="toc-problem-statement" class="nav-link" data-scroll-target="#problem-statement">Problem Statement</a></li>
-  <li><a href="#end-user" id="toc-end-user" class="nav-link" data-scroll-target="#end-user">End User</a></li>
-  </ul></li>
-  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a></li>
-  <li><a href="#methodology" id="toc-methodology" class="nav-link" data-scroll-target="#methodology">Methodology</a>
-  <ul class="collapse">
-  <li><a href="#susceptibility-model" id="toc-susceptibility-model" class="nav-link" data-scroll-target="#susceptibility-model">Susceptibility Model</a></li>
-  <li><a href="#random-forest-model" id="toc-random-forest-model" class="nav-link" data-scroll-target="#random-forest-model">Random Forest Model</a></li>
-  </ul></li>
-  <li><a href="#interface" id="toc-interface" class="nav-link" data-scroll-target="#interface">Interface</a></li>
-  <li><a href="#the-application" id="toc-the-application" class="nav-link" data-scroll-target="#the-application">The Application</a>
-  <ul class="collapse">
-  <li><a href="#demo" id="toc-demo" class="nav-link" data-scroll-target="#demo">Demo</a></li>
-  <li><a href="#key-features-beyond-the-demo" id="toc-key-features-beyond-the-demo" class="nav-link" data-scroll-target="#key-features-beyond-the-demo">Key Features Beyond the Demo</a></li>
-  </ul></li>
-  <li><a href="#how-it-works" id="toc-how-it-works" class="nav-link" data-scroll-target="#how-it-works">How it Works</a>
-  <ul class="collapse">
-  <li><a href="#data-preparation-and-precomputations" id="toc-data-preparation-and-precomputations" class="nav-link" data-scroll-target="#data-preparation-and-precomputations">1. Data Preparation and Precomputations</a></li>
-  <li><a href="#interactive-visualization-and-analysis" id="toc-interactive-visualization-and-analysis" class="nav-link" data-scroll-target="#interactive-visualization-and-analysis">2. Interactive Visualization and Analysis</a></li>
-  <li><a href="#insights-and-objectives" id="toc-insights-and-objectives" class="nav-link" data-scroll-target="#insights-and-objectives">3. Insights and Objectives</a></li>
-  <li><a href="#limitations-and-potential-expansion" id="toc-limitations-and-potential-expansion" class="nav-link" data-scroll-target="#limitations-and-potential-expansion">4. Limitations and Potential Expansion</a></li>
-  </ul></li>
-  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">carousel_section</h1>
+</div>
 
 
 
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
 
 
-<section id="project-summary" class="level2">
-<h2 class="anchored" data-anchor-id="project-summary">Project Summary</h2>
-<p>1111</p>
-<hr>
-<section id="problem-statement" class="level3">
-<h3 class="anchored" data-anchor-id="problem-statement">Problem Statement</h3>
-<p>London faces increasing extreme heat and urban heat island risks, threatening public health and economic resilience. In 2020, heat-related economic losses reached £577 million, while the 2022 heatwaves caused around 370 deaths. This project develops a borough-level Heat Risk Index (HRI) to systematically assess and visualise London’s heat risk. The platform helps planners, policymakers and stakeholders identify priority areas for intervention and supports climate adaptation, green infrastructure and urban resilience goals in the London Plan 2021.</p>
-</section>
-<section id="end-user" class="level3">
-<h3 class="anchored" data-anchor-id="end-user">End User</h3>
-<p>1111</p>
-</section>
-</section>
-<section id="data" class="level2">
-<h2 class="anchored" data-anchor-id="data">Data</h2>
-</section>
-<section id="methodology" class="level2">
-<h2 class="anchored" data-anchor-id="methodology">Methodology</h2>
-<section id="susceptibility-model" class="level3">
-<h3 class="anchored" data-anchor-id="susceptibility-model">Susceptibility Model</h3>
-<p>To recreate Hong et al.’s susceptibility model in GEE, we imported six environmental variables into a weighted linear combination. Each variable was normalized on a 0-1 scale, and in combination with the weights provided a susceptibility score for each pixel. Susceptibility was then normalized 0-1 for the whole of Nepal.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/heat.png" class="img-fluid figure-img"></p>
-<figcaption>Susceptibility Model Methodology</figcaption>
-</figure>
-</div>
-<section id="susceptibility-model-code" class="level4">
-<h4 class="anchored" data-anchor-id="susceptibility-model-code">Susceptibility Model Code</h4>
-<div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode j code-with-copy"><code class="sourceCode j"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
-</section>
-<section id="random-forest-model" class="level3">
-<h3 class="anchored" data-anchor-id="random-forest-model">Random Forest Model</h3>
-<p>To find populated areas most susceptible to landslides, we masked our environmental variables to populated areas, and trained a random forest classifier on landslide and randomly generated non-landslide points from Bipad Portal. Each pixel was scored based on the proportion of decision trees voting landslide.</p>
-<p><img src="images/heat.png" class="img-fluid" alt="Random Forest Model Methodology"> #### Random Forest Model Code</p>
-<div>
-<pre><code></code></pre>
-</div>
-</section>
-</section>
-<section id="interface" class="level2">
-<h2 class="anchored" data-anchor-id="interface">Interface</h2>
-<p>111</p>
-<div class="columns" data-layout-align="center">
-<div class="column" style="width:46%;">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/heat.png" class="img-fluid figure-img"></p>
-<figcaption>District Level View</figcaption>
-</figure>
-</div>
-</div><div class="column" style="width:2%;">
+</header>
 
-</div><div class="column" style="width:46%;">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/heat.png" class="img-fluid figure-img"></p>
-<figcaption>Methodology View</figcaption>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="the-application" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="the-application">The Application</h2>
-<section id="demo" class="level3 page-columns page-full">
-<h3 class="anchored" data-anchor-id="demo">Demo</h3>
-<p>1111</p>
-<div class="column-page">
-<iframe src="https://casa-remote-sensing.projects.earthengine.app/view/london-heat-risk" width="100%" height="700px">
-</iframe>
-</div>
-</section>
-<section id="key-features-beyond-the-demo" class="level3">
-<h3 class="anchored" data-anchor-id="key-features-beyond-the-demo">Key Features Beyond the Demo</h3>
-<hr>
-<hr>
+
 <div class="cell">
 <div class="cell-output-display">
 <div id="gallery-carousel" class="carousel carousel-dark slide" data-bs-ride="false" style="height: 480px; background-color: #f0f0f0; position: relative; width: 100%;">
@@ -336,65 +183,8 @@ background-size: cover;
 </div>
 </div>
 </div>
-</section>
-</section>
-<section id="how-it-works" class="level2">
-<h2 class="anchored" data-anchor-id="how-it-works">How it Works</h2>
-<section id="data-preparation-and-precomputations" class="level3">
-<h3 class="anchored" data-anchor-id="data-preparation-and-precomputations">1. Data Preparation and Precomputations</h3>
-<p>To handle complex computations, separate scripts were developed for the two methodologies explained above and results are imported into the app as precomputed layers.</p>
-<section id="imported-precomputed-layers" class="level4">
-<h4 class="anchored" data-anchor-id="imported-precomputed-layers">Imported Precomputed Layers:</h4>
-<ul>
-<li><p>Environmental Landslide Susceptibility: Maps susceptibility using environmental variables.</p></li>
-<li><p>Normalized Landslide Susceptibility: Adjusted for population exposure.</p></li>
-<li><p>Random Forest Landslide Probability: ML-based risk focused on populated areas.</p></li>
-</ul>
-</section>
-<section id="district-level-aggregation" class="level4">
-<h4 class="anchored" data-anchor-id="district-level-aggregation">District-Level Aggregation:</h4>
-<p>A dedicated script was built to aggregate historical landslide data with impact metrics (e.g., incidents, deaths, injuries, destroyed infrastructure), alongside population and susceptibility metrics per district. It also computes engineered features like incidents per km² and identifies nearest districts (via spatial proximity of centroids) to support comparative analysis.</p>
-<div class="scroll-container" style="overflow-y: scroll; height: 300px; padding:20px ">
-
-</div>
-</section>
-</section>
-<section id="interactive-visualization-and-analysis" class="level3">
-<h3 class="anchored" data-anchor-id="interactive-visualization-and-analysis">2. Interactive Visualization and Analysis</h3>
-<section id="national-overview" class="level4">
-<h4 class="anchored" data-anchor-id="national-overview">National Overview</h4>
-<p>At startup, national-level statistics are displayed, highlighting aggregated data. A pie chart shows population risk distribution across susceptibility zones (Low, Medium, High), and a bar chart lists the top 5 districts by impact metric, allowing users to switch metrics and zoom into a district by clicking a bar.</p>
-</section>
-<section id="susceptibility-zones" class="level4">
-<h4 class="anchored" data-anchor-id="susceptibility-zones">Susceptibility Zones</h4>
-<p>Susceptibility zones are defined as Low (&lt;0.3), Medium (0.3–0.5), and High (&gt;0.5), identified by analyzing the distribution of susceptibility values from the built Susceptibility model.</p>
-<div class="scroll-container" style="overflow-y: scroll; height: 300px; padding:20px ">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
-<section id="district-level-analysis" class="level4">
-<h4 class="anchored" data-anchor-id="district-level-analysis">District-Level Analysis</h4>
-<p>This view visualizes precomputed district-level metrics, comparing them with national averages and the two nearest districts. Historical landslides are mapped, with popups displaying aggregated impact details (e.g., deaths, injuries) within a 300m radius of a clicked point.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="methodology-overview" class="level4">
-<h4 class="anchored" data-anchor-id="methodology-overview">Methodology Overview</h4>
-<p>This view allows users to compare the two methodologies (Environmental Susceptibility and RF) using a split panel. It displays the RF probability map and normalized risk map for populated areas, with a draggable divider for spatial comparison, focusing on population exposure.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-</section>
-<section id="insights-and-objectives" class="level3">
-<h3 class="anchored" data-anchor-id="insights-and-objectives">3. Insights and Objectives</h3>
-</section>
-<section id="limitations-and-potential-expansion" class="level3">
-<h3 class="anchored" data-anchor-id="limitations-and-potential-expansion">4. Limitations and Potential Expansion</h3>
-</section>
-</section>
-<section id="references" class="level1">
-<h1>References</h1>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

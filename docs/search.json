@@ -2,49 +2,49 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "HRI in London",
+    "title": "London Heat Risk Application",
     "section": "",
-    "text": "1111\n\n\n\n1111\n\n\n\n1111"
+    "text": "1111\n\n\n\nLondon faces increasing extreme heat and urban heat island risks, threatening public health and economic resilience. In 2020, heat-related economic losses reached £577 million, while the 2022 heatwaves caused around 370 deaths. This project develops a borough-level Heat Risk Index (HRI) to systematically assess and visualise London’s heat risk. The platform helps planners, policymakers and stakeholders identify priority areas for intervention and supports climate adaptation, green infrastructure and urban resilience goals in the London Plan 2021.\n\n\n\n1111"
   },
   {
     "objectID": "index.html#project-summary",
     "href": "index.html#project-summary",
-    "title": "HRI in London",
+    "title": "London Heat Risk Application",
     "section": "",
-    "text": "1111\n\n\n\n1111\n\n\n\n1111"
+    "text": "1111\n\n\n\nLondon faces increasing extreme heat and urban heat island risks, threatening public health and economic resilience. In 2020, heat-related economic losses reached £577 million, while the 2022 heatwaves caused around 370 deaths. This project develops a borough-level Heat Risk Index (HRI) to systematically assess and visualise London’s heat risk. The platform helps planners, policymakers and stakeholders identify priority areas for intervention and supports climate adaptation, green infrastructure and urban resilience goals in the London Plan 2021.\n\n\n\n1111"
   },
   {
     "objectID": "index.html#data",
     "href": "index.html#data",
-    "title": "HRI in London",
+    "title": "London Heat Risk Application",
     "section": "Data",
-    "text": "Data\n\n\n\ncatogory\n\n\nDataset\n\n\nDescription\n\n\nSource\n\n\n\n\nSatellite data\n\n\nElevation/Slope\n\n\nNASA SRTM Digital Elevation 30m\n\n\nLink\n\n\n\n\nLand Cover\n\n\nMODIS Land Cover Type (2020)\n\n\nLink\n\n\n\n\nHydrology\n\n\nWWF HydroSHEDS flow accumulation\n\n\nLink\n\n\n\n\nSoil Texture\n\n\nOpenLandMap Soil Texture Class (USDA System)\n\n\nLink\n\n\n\n\nSoil Type\n\n\nOpenLandMap Clay Content\n\n\nLink\n\n\n\n\nPopulation Density\n\n\nGlobal Human Settlement Layer of spatial distribution of residential population\n\n\nLink\n\n\n\n\nOther\n\n\nHistorical Landslides\n\n\nOfficial reported landslide incident points (2011 - April 2025)\n\n\nLink\n\n\n\n\nCensus Population\n\n\nOfficial Population per District 2021 Census\n\n\nLink\n\n\n\n\nCountry Boundary\n\n\nOfficial boundary layer for Nepal\n\n\nLink\n\n\n\n\nDistricts Boundaries\n\n\nOfficial bouundaries of Nepal’s 77 districts\n\n\nLink"
+    "text": "Data"
   },
   {
     "objectID": "index.html#methodology",
     "href": "index.html#methodology",
-    "title": "HRI in London",
+    "title": "London Heat Risk Application",
     "section": "Methodology",
     "text": "Methodology\n\nSusceptibility Model\nTo recreate Hong et al.’s susceptibility model in GEE, we imported six environmental variables into a weighted linear combination. Each variable was normalized on a 0-1 scale, and in combination with the weights provided a susceptibility score for each pixel. Susceptibility was then normalized 0-1 for the whole of Nepal.\n\n\n\nSusceptibility Model Methodology\n\n\n\nSusceptibility Model Code\n\n\n\n\n\n\nRandom Forest Model\nTo find populated areas most susceptible to landslides, we masked our environmental variables to populated areas, and trained a random forest classifier on landslide and randomly generated non-landslide points from Bipad Portal. Each pixel was scored based on the proportion of decision trees voting landslide.\n #### Random Forest Model Code"
   },
   {
     "objectID": "index.html#interface",
     "href": "index.html#interface",
-    "title": "HRI in London",
+    "title": "London Heat Risk Application",
     "section": "Interface",
     "text": "Interface\n111\n\n\n\n\n\nDistrict Level View\n\n\n\n\n\n\n\n\nMethodology View"
   },
   {
     "objectID": "index.html#the-application",
     "href": "index.html#the-application",
-    "title": "HRI in London",
+    "title": "London Heat Risk Application",
     "section": "The Application",
-    "text": "The Application\n\nDemo\n1111\n\n\n\n\n\n\nKey Features Beyond the Demo\nWhile our demo showcases the app’s core functionality, several critical features work behind the scenes to enhance its performance and reliability. In this section, we highlight key capabilities implemented to optimize efficiency and ensure a seamless user experience."
+    "text": "The Application\n\nDemo\n1111\n\n\n\n\n\n\nKey Features Beyond the Demo\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMulti-Language Support\nThis feature improves accessibility by supporting English, Chinese, and Turkish, allowing users from diverse backgrounds to easily understand and use the tool.\n\n\n\n\n\n\n\nOut-of-Bounds Interaction Feedback\nWhen users click outside the study area, the system provides immediate feedback and guides them back to the valid region, preventing unintended actions and improving overall user experience.\n\n\n\n\n\n\n\nBorough-Level Focus\nThis feature allows users to select a borough to highlight it while dimming surrounding areas, providing focused insights and detailed information for clearer spatial analysis.\n\n\n\n\n\n\n\nInteractive Data Exploration\nThis feature enables interactive exploration by linking charts and maps, allowing users to click on visual elements to dynamically highlight and analyse spatial patterns.\n\n\n\n\n\n\n\nMulti-Scale Information Dashboard\nThis feature provides a multi-scale information dashboard, presenting key indicators such as population density, heat exposure, and green space, alongside an integrated Heat Risk Index and risk classification.\n\n\n\n\n\n\n\nSplit-Screen Layer Comparison\nThis feature enables users to compare multiple spatial layers side by side, allowing flexible exploration of relationships between heat exposure, vegetation, population density, and heat risk.\n\n\n\n\n\n\n\n\n\nPrevious\n\n\n\nNext"
   },
   {
     "objectID": "index.html#how-it-works",
     "href": "index.html#how-it-works",
-    "title": "HRI in London",
+    "title": "London Heat Risk Application",
     "section": "How it Works",
     "text": "How it Works\n\n1. Data Preparation and Precomputations\nTo handle complex computations, separate scripts were developed for the two methodologies explained above and results are imported into the app as precomputed layers.\n\nImported Precomputed Layers:\n\nEnvironmental Landslide Susceptibility: Maps susceptibility using environmental variables.\nNormalized Landslide Susceptibility: Adjusted for population exposure.\nRandom Forest Landslide Probability: ML-based risk focused on populated areas.\n\n\n\nDistrict-Level Aggregation:\nA dedicated script was built to aggregate historical landslide data with impact metrics (e.g., incidents, deaths, injuries, destroyed infrastructure), alongside population and susceptibility metrics per district. It also computes engineered features like incidents per km² and identifies nearest districts (via spatial proximity of centroids) to support comparative analysis.\n\n\n\n\n\n\n2. Interactive Visualization and Analysis\n\nNational Overview\nAt startup, national-level statistics are displayed, highlighting aggregated data. A pie chart shows population risk distribution across susceptibility zones (Low, Medium, High), and a bar chart lists the top 5 districts by impact metric, allowing users to switch metrics and zoom into a district by clicking a bar.\n\n\nSusceptibility Zones\nSusceptibility zones are defined as Low (&lt;0.3), Medium (0.3–0.5), and High (&gt;0.5), identified by analyzing the distribution of susceptibility values from the built Susceptibility model.\n\n\n\n\n\nDistrict-Level Analysis\nThis view visualizes precomputed district-level metrics, comparing them with national averages and the two nearest districts. Historical landslides are mapped, with popups displaying aggregated impact details (e.g., deaths, injuries) within a 300m radius of a clicked point.\n \n\n\nMethodology Overview\nThis view allows users to compare the two methodologies (Environmental Susceptibility and RF) using a split panel. It displays the RF probability map and normalized risk map for populated areas, with a draggable divider for spatial comparison, focusing on population exposure.\n\n\n\n\n3. Insights and Objectives\n\n\n4. Limitations and Potential Expansion"
   },
@@ -61,5 +61,12 @@
     "title": "",
     "section": "",
     "text": "Use this repository to host a website for your CASA0025 final project by following these stpes:\n\nclone this repository\ninstall quarto\nedit the ‘index.qmd’ file with the contents of your project\nusing terminal, navigate to the project directory and run “quarto render”\npush the changes to your github repository\non github, navigate to Settings&gt;Pages&gt;Build and Deployment. Make sure that under “Source” it says “deploy from branch”. Under “Branch”, select “Main” in the first dropdown and “Docs” under the second drop down. Then press “Save”\n\nYour website should now be available under https://{your_username}.github.io/{your_repo_name}"
+  },
+  {
+    "objectID": "carousel_section.html",
+    "href": "carousel_section.html",
+    "title": "carousel_section",
+    "section": "",
+    "text": "Multi-Language Support\nThis feature improves accessibility by supporting English, Chinese, and Turkish, allowing users from diverse backgrounds to easily understand and use the tool.\n\n\n\n\n\n\n\nOut-of-Bounds Interaction Feedback\nWhen users click outside the study area, the system provides immediate feedback and guides them back to the valid region, preventing unintended actions and improving overall user experience.\n\n\n\n\n\n\n\nBorough-Level Focus\nThis feature allows users to select a borough to highlight it while dimming surrounding areas, providing focused insights and detailed information for clearer spatial analysis.\n\n\n\n\n\n\n\nInteractive Data Exploration\nThis feature enables interactive exploration by linking charts and maps, allowing users to click on visual elements to dynamically highlight and analyse spatial patterns.\n\n\n\n\n\n\n\nMulti-Scale Information Dashboard\nThis feature provides a multi-scale information dashboard, presenting key indicators such as population density, heat exposure, and green space, alongside an integrated Heat Risk Index and risk classification.\n\n\n\n\n\n\n\nSplit-Screen Layer Comparison\nThis feature enables users to compare multiple spatial layers side by side, allowing flexible exploration of relationships between heat exposure, vegetation, population density, and heat risk.\n\n\n\n\n\n\n\n\n\nPrevious\n\n\n\nNext"
   }
 ]

@@ -234,3 +234,31 @@ img {
 .sidebar nav[role="doc-toc"] a:hover {
   color: #7f6f55 !important;
 }
+
+/* ---------- Title banner: sample-style hero section ---------- */
+
+.quarto-title-block .quarto-title-banner {
+  height: 360px;
+  background-size: cover;
+  background-position: center center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.quarto-title-block .quarto-title-banner .quarto-title {
+  text-align: center;
+  width: 100%;
+}
+
+.quarto-title-block .quarto-title-banner h1.title {
+  color: white;
+  font-size: 4.2rem;
+  font-weight: 800;
+  line-height: 1.1;
+  text-align: center;
+  margin: 0;
+  padding: 0 2rem;
+  text-shadow: 0 3px 12px rgba(0, 0, 0, 0.45);
+}
