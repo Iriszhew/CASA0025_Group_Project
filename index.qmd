@@ -8,13 +8,12 @@ css: style.css
 
 This project develops an interactive spatial Heat Risk Index (HRI) platform for London, aiming to bridge the gap between academic heat-risk research and practical urban governance. By integrating Land Surface Temperature (LST), vegetation indicators, Urban Heat Island (UHI) proportion, and population density LQ, the platform transforms complex spatial datasets into a clear borough-level heat risk assessment. Using precomputed Google Earth Engine layers, the dashboard supports efficient visualisation, localised borough profiling, and split-screen comparison between key indicators. The platform provides actionable insights for urban planners, public health agencies, and climate adaptation teams to identify high-risk areas and prioritise targeted heat mitigation interventions.
 
-------------------------------------------------------------------------
 
-### Problem Statement
+## Problem Statement
 
 London faces increasing extreme heat and urban heat island risks, threatening public health and economic resilience. In 2020, heat-related economic losses reached £577 million, while the 2022 heatwaves caused around 370 deaths(Climate Resilience Center, 2023; Simpson, Brousse and Heaviside, 2024). This project develops a borough-level Heat Risk Index (HRI) to systematically assess and visualise London’s heat risk. The platform helps planners, policymakers and stakeholders identify priority areas for intervention and supports climate adaptation, green infrastructure and urban resilience goals in the London Plan 2021.
 
-### End User
+## End User
 
 This Heat Risk Index (HRI) is designed for users across urban governance, public health, and spatial analysis in London, including planners, local authorities, public health agencies, and GIS analysts. These users require tools that are both scientifically robust and accessible to support decision-making under increasing heat risks.
 
@@ -170,13 +169,11 @@ To improve the performance of the dashboard, the main spatial calculations were 
 
 **Heat Risk Index:** a pre-processed borough-level HRI table was calculated separately in Python (https://github.com/Iriszhew/CASA0025_Group_Project/blob/main/gw_calculate_HRI.ipynb) and then imported into Google Earth Engine. It combines population density, lack of green cover and UHI exposure into a single risk score
 
-(Table)
 
 
 #### Borough-Level Aggregation:
 
 All indicators were aggregated to the borough scale so that each borough contains a consistent set of summary values. For each borough, the workflow extracts the borough geometry, calculates average heat and vegetation indicators within the boundary, and stores the results as new borough-level attributes. These values are then used by the dashboard when users click or select a borough.
-
 
 ::: {.scroll-container style="overflow-y: scroll; height: 300px; padding:20px "}
 
@@ -382,7 +379,6 @@ The left dashboard summarises key metrics, including average surface temperature
 #### Heat Risk Index Classification
 
 Following Elmarakby and Elkadi (2024), the HRI ranges from 3 to 15 and is divided into five categories for clearer comparison across boroughs.
-
 ::: {.scroll-container style="overflow-y: scroll; height: 300px; padding:20px "}
 ``` javascript
 if (hri <= 5) {
@@ -558,7 +554,7 @@ In addition to the London overview and borough-level analysis, the app includes 
 
 The split view contains two linked maps displayed side by side. Users can independently select the layer shown on the left and right maps, including Mean LST, UHI pixels, Green Cover, Mean NDVI, Population Density LQ and London HRI. This allows users to directly compare how heat exposure, vegetation conditions and population density overlap across London.
 
-
+::: {.scroll-container style="overflow-y: scroll; height: 300px; padding:20px "}
 ``` javascript
 function createSplitComparisonView() {
 
@@ -648,6 +644,7 @@ function createSplitComparisonView() {
 }
 
 ```
+:::
 
 ### 3. Insights and Objectives
 The app provides actionable insights for urban heat adaptation in London by identifying high-risk boroughs and showing how population density, heat exposure and vegetation conditions shape overall heat risk. It supports:

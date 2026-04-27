@@ -172,11 +172,9 @@ window.Quarto = {
     <h2 id="toc-title">Contents</h2>
    
   <ul>
-  <li><a href="#project-summary" id="toc-project-summary" class="nav-link active" data-scroll-target="#project-summary">Project Summary</a>
-  <ul class="collapse">
+  <li><a href="#project-summary" id="toc-project-summary" class="nav-link active" data-scroll-target="#project-summary">Project Summary</a></li>
   <li><a href="#problem-statement" id="toc-problem-statement" class="nav-link" data-scroll-target="#problem-statement">Problem Statement</a></li>
   <li><a href="#end-user" id="toc-end-user" class="nav-link" data-scroll-target="#end-user">End User</a></li>
-  </ul></li>
   <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a></li>
   <li><a href="#methodology" id="toc-methodology" class="nav-link" data-scroll-target="#methodology">Methodology</a></li>
   <li><a href="#interface" id="toc-interface" class="nav-link" data-scroll-target="#interface">Interface</a></li>
@@ -206,16 +204,15 @@ window.Quarto = {
 <section id="project-summary" class="level2">
 <h2 class="anchored" data-anchor-id="project-summary">Project Summary</h2>
 <p>This project develops an interactive spatial Heat Risk Index (HRI) platform for London, aiming to bridge the gap between academic heat-risk research and practical urban governance. By integrating Land Surface Temperature (LST), vegetation indicators, Urban Heat Island (UHI) proportion, and population density LQ, the platform transforms complex spatial datasets into a clear borough-level heat risk assessment. Using precomputed Google Earth Engine layers, the dashboard supports efficient visualisation, localised borough profiling, and split-screen comparison between key indicators. The platform provides actionable insights for urban planners, public health agencies, and climate adaptation teams to identify high-risk areas and prioritise targeted heat mitigation interventions.</p>
-<hr>
-<section id="problem-statement" class="level3">
-<h3 class="anchored" data-anchor-id="problem-statement">Problem Statement</h3>
+</section>
+<section id="problem-statement" class="level2">
+<h2 class="anchored" data-anchor-id="problem-statement">Problem Statement</h2>
 <p>London faces increasing extreme heat and urban heat island risks, threatening public health and economic resilience. In 2020, heat-related economic losses reached £577 million, while the 2022 heatwaves caused around 370 deaths(Climate Resilience Center, 2023; Simpson, Brousse and Heaviside, 2024). This project develops a borough-level Heat Risk Index (HRI) to systematically assess and visualise London’s heat risk. The platform helps planners, policymakers and stakeholders identify priority areas for intervention and supports climate adaptation, green infrastructure and urban resilience goals in the London Plan 2021.</p>
 </section>
-<section id="end-user" class="level3">
-<h3 class="anchored" data-anchor-id="end-user">End User</h3>
+<section id="end-user" class="level2">
+<h2 class="anchored" data-anchor-id="end-user">End User</h2>
 <p>This Heat Risk Index (HRI) is designed for users across urban governance, public health, and spatial analysis in London, including planners, local authorities, public health agencies, and GIS analysts. These users require tools that are both scientifically robust and accessible to support decision-making under increasing heat risks.</p>
 <p>While extensive research on urban heat exists, there remains a gap between academic outputs and practical implementation. This project addresses this by integrating land surface temperature, green cover, NDVI, and population density into a single, spatially explicit index, providing a clear and interpretable representation of heat risk across boroughs.</p>
-</section>
 </section>
 <section id="data" class="level2">
 <h2 class="anchored" data-anchor-id="data">Data</h2>
@@ -481,7 +478,6 @@ HRI = UHI_{score} + LackGreen_{score} + Density_{score}
 <p><strong>Urban Heat Island Proportion:</strong> to show the proportion of each borough affected by UHI conditions.</p>
 <p><strong>Green Cover and NDVI:</strong> to represent the availability and condition of vegetation.</p>
 <p><strong>Heat Risk Index:</strong> a pre-processed borough-level HRI table was calculated separately in Python (https://github.com/Iriszhew/CASA0025_Group_Project/blob/main/gw_calculate_HRI.ipynb) and then imported into Google Earth Engine. It combines population density, lack of green cover and UHI exposure into a single risk score</p>
-<p>(Table)</p>
 </section>
 <section id="borough-level-aggregation" class="level4">
 <h4 class="anchored" data-anchor-id="borough-level-aggregation">Borough-Level Aggregation:</h4>
@@ -680,8 +676,7 @@ HRI = UHI_{score} + LackGreen_{score} + Density_{score}
 </section>
 <section id="heat-risk-index-classification" class="level4">
 <h4 class="anchored" data-anchor-id="heat-risk-index-classification">Heat Risk Index Classification</h4>
-<p>Following Elmarakby and Elkadi (2024), the HRI ranges from 3 to 15 and is divided into five categories for clearer comparison across boroughs.</p>
-<div class="scroll-container" style="overflow-y: scroll; height: 300px; padding:20px ">
+<p>Following Elmarakby and Elkadi (2024), the HRI ranges from 3 to 15 and is divided into five categories for clearer comparison across boroughs. ::: {.scroll-container style=“overflow-y: scroll; height: 300px; padding:20px”}</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (hri <span class="op">&lt;=</span> <span class="dv">5</span>) {</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="fu">translate</span>(<span class="st">'Very Low Risk'</span>)<span class="op">;</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (hri <span class="op">&lt;=</span> <span class="dv">7</span>) {</span>
@@ -693,7 +688,7 @@ HRI = UHI_{score} + LackGreen_{score} + Density_{score}
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="fu">translate</span>(<span class="st">'Very High Risk'</span>)<span class="op">;</span></span>
 <span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
+<p>:::</p>
 </section>
 <section id="borough-level-analysis" class="level4">
 <h4 class="anchored" data-anchor-id="borough-level-analysis">Borough-level Analysis</h4>
@@ -848,6 +843,7 @@ HRI = UHI_{score} + LackGreen_{score} + Density_{score}
 <h4 class="anchored" data-anchor-id="split-layer-comparison-view">Split Layer Comparison View</h4>
 <p>In addition to the London overview and borough-level analysis, the app includes a split layer comparison view to help users explore the spatial relationships between different heat risk indicators.</p>
 <p>The split view contains two linked maps displayed side by side. Users can independently select the layer shown on the left and right maps, including Mean LST, UHI pixels, Green Cover, Mean NDVI, Population Density LQ and London HRI. This allows users to directly compare how heat exposure, vegetation conditions and population density overlap across London.</p>
+<div class="scroll-container" style="overflow-y: scroll; height: 300px; padding:20px ">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">createSplitComparisonView</span>() {</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  splitLeftMap <span class="op">=</span> ui<span class="op">.</span><span class="fu">Map</span>()<span class="op">;</span></span>
@@ -934,6 +930,7 @@ HRI = UHI_{score} + LackGreen_{score} + Density_{score}
 <span id="cb6-84"><a href="#cb6-84" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-85"><a href="#cb6-85" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> splitPanelWidget<span class="op">;</span></span>
 <span id="cb6-86"><a href="#cb6-86" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </section>
 </section>
 <section id="insights-and-objectives" class="level3">
