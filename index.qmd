@@ -159,15 +159,40 @@ To improve the performance of the dashboard, the main spatial calculations were 
 
 #### Imported and Processed Layers:
 
-**Population Density LQ:** to show how each area compares with the London average.
+<table>
+  <tr>
+    <th>INDICATOR</th>
+    <th>DESCRIPTION</th>
+  </tr>
 
-**Mean Land Surface Temperature:** to represent summer heat exposure across London.
+  <tr>
+    <td>Population Density LQ</td>
+    <td class="description">Shows how each area compares with the London average population density.</td>
+  </tr>
 
-**Urban Heat Island Proportion:** to show the proportion of each borough affected by UHI conditions.
+  <tr>
+    <td>Mean Land Surface Temperature</td>
+    <td class="description">Represents summer heat exposure across London.</td>
+  </tr>
 
-**Green Cover and NDVI:** to represent the availability and condition of vegetation.
+  <tr>
+    <td>Urban Heat Island Proportion</td>
+    <td class="description">Shows the proportion of each borough affected by UHI conditions.</td>
+  </tr>
 
-**Heat Risk Index:** a pre-processed borough-level HRI table was calculated separately in Python (https://github.com/Iriszhew/CASA0025_Group_Project/blob/main/gw_calculate_HRI.ipynb) and then imported into Google Earth Engine. It combines population density, lack of green cover and UHI exposure into a single risk score
+  <tr>
+    <td>Green Cover and NDVI</td>
+    <td class="description">Represents the availability and condition of vegetation.</td>
+  </tr>
+
+  <tr>
+    <td>Heat Risk Index</td>
+    <td class="description">
+      A pre-processed borough-level HRI table calculated separately in Python and imported into Google Earth Engine. It combines population density, lack of green cover and UHI exposure into a single risk score.
+      <a href="https://github.com/Iriszhew/CASA0025_Group_Project/blob/main/gw_calculate_HRI.ipynb ">Link</a >
+    </td>
+  </tr>
+</table>
 
 
 
