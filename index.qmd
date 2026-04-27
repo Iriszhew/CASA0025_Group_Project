@@ -12,7 +12,7 @@ css: style.css
 
 ### Problem Statement
 
-London faces increasing extreme heat and urban heat island risks, threatening public health and economic resilience. In 2020, heat-related economic losses reached £577 million, while the 2022 heatwaves caused around 370 deaths. This project develops a borough-level Heat Risk Index (HRI) to systematically assess and visualise London’s heat risk. The platform helps planners, policymakers and stakeholders identify priority areas for intervention and supports climate adaptation, green infrastructure and urban resilience goals in the London Plan 2021.
+London faces increasing extreme heat and urban heat island risks, threatening public health and economic resilience. In 2020, heat-related economic losses reached £577 million, while the 2022 heatwaves caused around 370 deaths(Climate Resilience Center, 2023; Simpson, Brousse and Heaviside, 2024). This project develops a borough-level Heat Risk Index (HRI) to systematically assess and visualise London’s heat risk. The platform helps planners, policymakers and stakeholders identify priority areas for intervention and supports climate adaptation, green infrastructure and urban resilience goals in the London Plan 2021.
 
 ### End User
 
@@ -30,7 +30,8 @@ $$
 
 $$
 HRI = UHI_{score} + LackGreen_{score} + Density_{score}
-$$ These three indicators are then equally weighted and summed to produce the final HRI. Higher HRI values indicate greater overall heat risk and help identify boroughs where mitigation actions should be prioritised.
+$$ 
+These three indicators are then equally weighted and summed to produce the final HRI. Higher HRI values indicate greater overall heat risk and help identify boroughs where mitigation actions should be prioritised.(Elmarakby and Elkadi, 2024)
 
 ![HRI Methodology](images/methodology.png)
 
@@ -103,7 +104,7 @@ To find populated areas most susceptible to landslides, we masked our environmen
 
 ### Demo
 
-1111
+This application uses Google Earth Engine to visualise borough-level heat risk across London. By integrating urban heat island intensity, population density and green cover, it presents an interactive Heat Risk Index map that helps users explore spatial patterns and identify areas requiring targeted heat mitigation.
 
 ::: column-page
 <iframe src="https://casa-remote-sensing.projects.earthengine.app/view/london-heat-risk" width="100%" height="700px">
@@ -113,7 +114,7 @@ To find populated areas most susceptible to landslides, we masked our environmen
 
 ### Key Features Beyond the Demo
 
-
+Beyond the core demo, the application includes several features to enhance usability and analysis. These support intuitive interaction, clearer spatial exploration, and flexible comparison of heat risk patterns. Together, they provide a more efficient and user-friendly way to understand and interpret heat risk across London.
 
 {{< include carousel_section.qmd >}}
 
@@ -331,3 +332,8 @@ This view allows users to compare the two methodologies (Environmental Susceptib
 ### 4. Limitations and Potential Expansion
 
 # References
+Climate Resilience Center (2023). Hot Cities, Chilled Economies: London, United Kingdom. Available at: https://onebillionresilient.org/hot-cities-chilled-economies-london/. 
+
+Simpson, C.H., Brousse, O. and Heaviside, C. (2024). Estimated mortality attributable to the urban heat island during the record-breaking 2022 heatwave in London. Environmental Research Letters, 19(9), pp.094047–094047. doi: https://doi.org/10.1088/1748-9326/ad6c65. 
+
+Elmarakby, E. and Elkadi, H. (2024). Prioritising urban heat island mitigation interventions: Mapping a heat risk index. The Science of The Total Environment, 948, pp.174927–174927. doi:https://doi.org/10.1016/j.scitotenv.2024.174927.
