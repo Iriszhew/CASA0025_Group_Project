@@ -20,8 +20,39 @@ London faces increasing extreme heat and urban heat island risks, threatening pu
 
 ## Data
 
-
 ## Methodology
+
+This project adopts the methodology proposed by Elmarakby and Elkadi (2024) to develop a borough-level Heat Risk Index (HRI) for London. The index integrates three key indicators: urban heat island intensity, population density, and green cover, representing heat exposure, population vulnerability, and cooling capacity. Each variable is standardised to a 1–5 scale using min–max normalisation.
+
+$$
+Score = 1 + 4 \times \frac{x - x_{min}}{x_{max} - x_{min}}
+$$
+
+$$
+HRI = UHI_{score} + LackGreen_{score} + Density_{score}
+$$ These three indicators are then equally weighted and summed to produce the final HRI. Higher HRI values indicate greater overall heat risk and help identify boroughs where mitigation actions should be prioritised.
+
+![HRI Methodology](images/methodology.png)
+
+#### Heat Risk Index Code
+
+::: {.scrolly-container style="overflow-y: scroll; height:300px; padding:20px;"}
+``` python
+# Min-max standardisation to 1-5
+def minmax_1_5(series):
+    return 1 + 4 * (series - series.min()) / (series.max() - series.min())
+
+df["lack_green_score"] = minmax_1_5(df["lack_green_pct"])
+df["density_score"] = minmax_1_5(df["borough_density"])
+df["uhi_score"] = minmax_1_5(df["UHI_proportion"])
+
+df["HRI"] = (
+    df["lack_green_score"] +
+    df["density_score"] +
+    df["uhi_score"]
+)
+```
+:::
 
 ### Susceptibility Model
 
@@ -47,7 +78,6 @@ To find populated areas most susceptible to landslides, we masked our environmen
 <div>
 
 ```         
-
 ```
 
 </div>
@@ -83,6 +113,8 @@ To find populated areas most susceptible to landslides, we masked our environmen
 
 ### Key Features Beyond the Demo
 
+
+
 {{< include carousel_section.qmd >}}
 
 ## How it Works
@@ -108,26 +140,184 @@ A dedicated script was built to aggregate historical landslide data with impact 
 
 ### 2. Interactive Visualization and Analysis
 
-#### National Overview
+#### London Overview
 
-At startup, national-level statistics are displayed, highlighting aggregated data. A pie chart shows population risk distribution across susceptibility zones (Low, Medium, High), and a bar chart lists the top 5 districts by impact metric, allowing users to switch metrics and zoom into a district by clicking a bar.
+At startup, the application displays the overall distribution of heat risk across London by borough, using a colour gradient to show different risk levels and help users quickly identify high-risk areas.
 
-#### Susceptibility Zones
+The left dashboard summarises key metrics, including average surface temperature, UHI proportion, green space coverage and HRI. It also shows the number of boroughs in each risk category and the top five boroughs with the highest HRI.
 
-Susceptibility zones are defined as Low (\<0.3), Medium (0.3–0.5), and High (\>0.5), identified by analyzing the distribution of susceptibility values from the built Susceptibility model.
+#### Heat Risk Index Classification
+
+Following Elmarakby and Elkadi (2024), the HRI ranges from 3 to 15 and is divided into five categories for clearer comparison across boroughs.
 
 ::: {.scroll-container style="overflow-y: scroll; height: 300px; padding:20px "}
 ``` javascript
+if (hri <= 5) {
+  return translate('Very Low Risk');
+} else if (hri <= 7) {
+  return translate('Low Risk');
+} else if (hri <= 10) {
+  return translate('Medium Risk');
+} else if (hri <= 12) {
+  return translate('High Risk');
+} else {
+  return translate('Very High Risk');
+}
 ```
 :::
 
-#### District-Level Analysis
+#### Borough-level Analysis
 
-This view visualizes precomputed district-level metrics, comparing them with national averages and the two nearest districts. Historical landslides are mapped, with popups displaying aggregated impact details (e.g., deaths, injuries) within a 300m radius of a clicked point.
+Users can select a borough from the drop-down menu or click directly on the map to view detailed information. The dashboard then displays population density, heat exposure, green space conditions, the final HRI score and its corresponding risk level.
 
+::: {.scroll-container style="overflow-y: scroll; height: 300px; padding:20px "}
 ``` javascript
- 
+// Create a reusable indicator card for the selected borough panel
+function createIndicatorCard(title, value, unit, description, valueColor, borderColor) {
+
+  valueColor = valueColor || UI_STYLE.text;
+  borderColor = borderColor || UI_STYLE.border;
+
+  return ui.Panel({
+    widgets: [
+      ui.Label(title, {
+        fontSize: '12px',
+        fontWeight: 'bold',
+        color: UI_STYLE.muted,
+        margin: '0 0 3px 0'
+      }),
+
+      ui.Label(value + unit, {
+        fontSize: '20px',
+        fontWeight: 'bold',
+        color: valueColor,
+        margin: '0 0 3px 0'
+      }),
+
+      ui.Label(description, {
+        fontSize: '10px',
+        color: UI_STYLE.muted,
+        margin: '0'
+      })
+    ],
+    layout: ui.Panel.Layout.flow('vertical'),
+    style: {
+      backgroundColor: '#ffffff',
+      border: '1px solid ' + borderColor,
+      padding: '9px',
+      margin: '5px 0'
+    }
+  });
+}
+
+
+// Update the left panel when a borough is selected
+function updateStatisticsPanel(p) {
+
+  statisticsPanel.clear();
+
+  statisticsPanel.add(ui.Label(p.LAD22NM, {
+    fontSize: '18px',
+    fontWeight: 'bold',
+    color: UI_STYLE.text,
+    margin: '0 0 4px 0'
+  }));
+
+  statisticsPanel.add(ui.Label(translate('Borough-level summary indicators'), {
+    fontSize: '11px',
+    color: UI_STYLE.muted,
+    margin: '0 0 8px 0'
+  }));
+
+  statisticsPanel.add(createDividerPanel());
+
+  // Population indicators
+  statisticsPanel.add(createSectionTitle(translate('Population')));
+
+  statisticsPanel.add(createIndicatorCard(
+    translate('Total Population'),
+    formatPopulation(p.borough_pop),
+    '',
+    translate('Based on 2021 Census population data.'),
+    '#2563eb',
+    '#bfdbfe'
+  ));
+
+  statisticsPanel.add(createIndicatorCard(
+    translate('Population Density LQ'),
+    formatValue(p.mean_density_LQ, 3),
+    '',
+    translate('Relative to the London average. Values above 1 indicate higher-than-average density.'),
+    '#2563eb',
+    '#bfdbfe'
+  ));
+
+  // Heat exposure indicators
+  statisticsPanel.add(createSectionTitle(translate('Heat Exposure')));
+
+  statisticsPanel.add(createIndicatorCard(
+    translate('Mean Land Surface Temperature'),
+    formatValue(p.mean_LST, 2),
+    ' °C',
+    translate('Average summer LST derived from Landsat 8/9.'),
+    '#ea580c',
+    '#fed7aa'
+  ));
+
+  statisticsPanel.add(createIndicatorCard(
+    translate('UHI Proportion'),
+    percentValue(p.UHI_proportion, 2),
+    ' %',
+    translate('Share of borough pixels above the UHI threshold.'),
+    '#ea580c',
+    '#fed7aa'
+  ));
+
+  // Green space and vegetation indicators
+  statisticsPanel.add(createSectionTitle(translate('Green Space & Vegetation')));
+
+  statisticsPanel.add(createIndicatorCard(
+    translate('Mean NDVI'),
+    formatValue(p.mean_NDVI, 3),
+    '',
+    translate('Higher NDVI generally indicates denser vegetation.'),
+    '#15803d',
+    '#bbf7d0'
+  ));
+
+  statisticsPanel.add(createIndicatorCard(
+    translate('Green Cover'),
+    formatValue(p.green_pct, 2),
+    ' %',
+    translate('Share of borough area classified as green cover.'),
+    '#15803d',
+    '#bbf7d0'
+  ));
+
+  // Integrated heat risk indicators
+  statisticsPanel.add(createSectionTitle(translate('Integrated Heat Risk')));
+
+  statisticsPanel.add(createIndicatorCard(
+    translate('Heat Risk Index'),
+    formatValue(p.HRI, 2),
+    ' / 15',
+    translate('Borough-level heat risk index.'),
+    '#dc2626',
+    '#fecaca'
+  ));
+
+  statisticsPanel.add(createIndicatorCard(
+    translate('Risk Level'),
+    getHriRiskLevel(p.HRI),
+    '',
+    translate('Heat risk classification based on the borough-level HRI score.'),
+    '#dc2626',
+    '#fecaca'
+  ));
+}
 ```
+:::
+
 
 #### Methodology Overview
 
