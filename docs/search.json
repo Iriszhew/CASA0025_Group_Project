@@ -58,9 +58,9 @@
   {
     "objectID": "readme.html",
     "href": "readme.html",
-    "title": "London Heat Risk Assessment Tool",
+    "title": "HeatSafe London",
     "section": "",
-    "text": "This repository contains the source code for a Google Earth Engine application developed to assess borough-level heat risk in Greater London.\n\n\n\napp_final_documented.js: final submitted version of the application code. The code is organised into clearly documented sections covering data import, indicator calculation, dashboard data preparation, map layer management, UI rendering, interaction logic and app initialisation.\napp_original_working_version.js: earlier working version retained for transparency and development record.\n\n\n\n\nThe final application source code for assessment is:\napp_final_documented.js"
+    "text": "HeatSafe London is an interactive Google Earth Engine dashboard for assessing urban heat risk across London boroughs. It combines population density, land surface temperature, urban heat island exposure, green cover, NDVI and a borough-level Heat Risk Index (HRI).\n\n\n\nMillie Wang 25187186\nZhe Wang 25213251\nZeyi Wu 25243122\n\n\n\n\n\nLondon-wide heat risk overview\nBorough-level indicator dashboard\nInteractive borough selection by dropdown or map click\nSplit-screen layer comparison\nMultilingual interface: English, Chinese and Turkish\n\n\n\n\nThe dashboard includes:\n\nPopulation Density Location Quotient (LQ)\nMean Land Surface Temperature (LST)\nUrban Heat Island (UHI) proportion\nGreen cover percentage\nMean NDVI\nHeat Risk Index (HRI)\n\n\n\n\nSpatial indicators are preprocessed in Google Earth Engine and aggregated to borough level. The HRI is calculated separately in Python and imported as a preprocessed borough-level table. Users can explore heat risk through a London overview, borough-level analysis and split layer comparison.\n\n\n\n\nOpen the Google Earth Engine Code Editor.\nLoad the main JavaScript file.\nEnsure all required assets are available or update the asset paths.\nRun the script to launch the dashboard."
   },
   {
     "objectID": "carousel_section.html",
@@ -103,5 +103,40 @@
     "title": "London Heat Risk Application",
     "section": "End User",
     "text": "End User\nThis Heat Risk Index (HRI) is designed for users across urban governance, public health, and spatial analysis in London, including planners, local authorities, public health agencies, and GIS analysts. These users require tools that are both scientifically robust and accessible to support decision-making under increasing heat risks.\nWhile extensive research on urban heat exists, there remains a gap between academic outputs and practical implementation. This project addresses this by integrating land surface temperature, green cover, NDVI, and population density into a single, spatially explicit index, providing a clear and interpretable representation of heat risk across boroughs."
+  },
+  {
+    "objectID": "readme.html#author",
+    "href": "readme.html#author",
+    "title": "HeatSafe London",
+    "section": "",
+    "text": "Millie Wang 25187186\nZhe Wang 25213251\nZeyi Wu 25243122"
+  },
+  {
+    "objectID": "readme.html#features",
+    "href": "readme.html#features",
+    "title": "HeatSafe London",
+    "section": "",
+    "text": "London-wide heat risk overview\nBorough-level indicator dashboard\nInteractive borough selection by dropdown or map click\nSplit-screen layer comparison\nMultilingual interface: English, Chinese and Turkish"
+  },
+  {
+    "objectID": "readme.html#indicators",
+    "href": "readme.html#indicators",
+    "title": "HeatSafe London",
+    "section": "",
+    "text": "The dashboard includes:\n\nPopulation Density Location Quotient (LQ)\nMean Land Surface Temperature (LST)\nUrban Heat Island (UHI) proportion\nGreen cover percentage\nMean NDVI\nHeat Risk Index (HRI)"
+  },
+  {
+    "objectID": "readme.html#how-it-works",
+    "href": "readme.html#how-it-works",
+    "title": "HeatSafe London",
+    "section": "",
+    "text": "Spatial indicators are preprocessed in Google Earth Engine and aggregated to borough level. The HRI is calculated separately in Python and imported as a preprocessed borough-level table. Users can explore heat risk through a London overview, borough-level analysis and split layer comparison."
+  },
+  {
+    "objectID": "readme.html#usage",
+    "href": "readme.html#usage",
+    "title": "HeatSafe London",
+    "section": "",
+    "text": "Open the Google Earth Engine Code Editor.\nLoad the main JavaScript file.\nEnsure all required assets are available or update the asset paths.\nRun the script to launch the dashboard."
   }
 ]
