@@ -1,11 +1,14 @@
-Use this repository to host a website for your CASA0025 final project by following these stpes: 
+# London Heat Risk Assessment Tool
 
-1. clone this repository 
-2. install [quarto](https://quarto.org/docs/download/) 
-3. edit the 'index.qmd' file with the contents of your project
-4. using terminal, navigate to the project directory and run "quarto render" 
-5. push the changes to your github repository 
-6. on github, navigate to Settings>Pages>Build and Deployment. Make sure that under "Source" it says "deploy from branch". Under "Branch", select "Main" in the first dropdown and "Docs" under the second drop down. Then press "Save" 
+This repository contains the source code for a Google Earth Engine application developed to assess borough-level heat risk in Greater London.
 
-Your website should now be available under 
-https://{your_username}.github.io/{your_repo_name}
+## Files
+
+- `app_final_documented.js`: final submitted version of the application code. The code is organised into clearly documented sections covering data import, indicator calculation, dashboard data preparation, map layer management, UI rendering, interaction logic and app initialisation.
+- `app_original_working_version.js`: earlier working version retained for transparency and development record.
+
+## Main application
+
+The final application source code for assessment is:
+
+`app_final_documented.js`
