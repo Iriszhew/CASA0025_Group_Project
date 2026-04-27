@@ -721,7 +721,8 @@ A pre-processed borough-level HRI table calculated separately in Python and impo
 </section>
 <section id="heat-risk-index-classification" class="level4">
 <h4 class="anchored" data-anchor-id="heat-risk-index-classification">Heat Risk Index Classification</h4>
-<p>Following Elmarakby and Elkadi (2024), the HRI ranges from 3 to 15 and is divided into five categories for clearer comparison across boroughs. ::: {.scroll-container style=“overflow-y: scroll; height: 300px; padding:20px”}</p>
+<p>Following Elmarakby and Elkadi (2024), the HRI ranges from 3 to 15 and is divided into five categories for clearer comparison across boroughs.</p>
+<div class="scroll-container" style="overflow-y: scroll; height: 300px; padding:20px ">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (hri <span class="op">&lt;=</span> <span class="dv">5</span>) {</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="fu">translate</span>(<span class="st">'Very Low Risk'</span>)<span class="op">;</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (hri <span class="op">&lt;=</span> <span class="dv">7</span>) {</span>
@@ -733,7 +734,7 @@ A pre-processed borough-level HRI table calculated separately in Python and impo
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="fu">translate</span>(<span class="st">'Very High Risk'</span>)<span class="op">;</span></span>
 <span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>:::</p>
+</div>
 </section>
 <section id="borough-level-analysis" class="level4">
 <h4 class="anchored" data-anchor-id="borough-level-analysis">Borough-level Analysis</h4>

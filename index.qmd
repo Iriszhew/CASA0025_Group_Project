@@ -404,6 +404,7 @@ The left dashboard summarises key metrics, including average surface temperature
 #### Heat Risk Index Classification
 
 Following Elmarakby and Elkadi (2024), the HRI ranges from 3 to 15 and is divided into five categories for clearer comparison across boroughs.
+
 ::: {.scroll-container style="overflow-y: scroll; height: 300px; padding:20px "}
 ``` javascript
 if (hri <= 5) {
