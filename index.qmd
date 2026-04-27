@@ -673,7 +673,6 @@ function createSplitComparisonView() {
 :::
 
 ### 3. Insights and Objectives
-The app provides actionable insights for urban heat adaptation in London by identifying high-risk boroughs and showing how population density, heat exposure and vegetation conditions shape overall heat risk. It supports:
 
 **Risk Prioritization:**
 Highlights boroughs with higher HRI scores and identifies areas where heat adaptation measures may be more urgent.
