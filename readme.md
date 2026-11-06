@@ -3,7 +3,7 @@
 HeatSafe London is an interactive Google Earth Engine dashboard for assessing urban heat risk across London boroughs. It combines population density, land surface temperature, urban heat island exposure, green cover, NDVI and a borough-level Heat Risk Index (HRI).
 
 ## Author
-- Millie Wang 25187186
+- Yiqing Wang 25187186
 - Zhe Wang 25213251
 - Zeyi Wu 25243122
 
